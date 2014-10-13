@@ -18,13 +18,6 @@
   "base": "Person",
   "properties": {},
   "validations": [],
-  "acls": [
-    {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "$unauthenticated",
-      "permission": "ALLOW"
-    }
-  ],
+  "acls": [],
   "methods": []
 }

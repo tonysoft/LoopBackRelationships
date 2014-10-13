@@ -7,7 +7,7 @@
     "Role": 1,
     "Student": 9,
     "Teacher": 3,
-    "Class": 3,
+    "Class": 4,
     "ClassStudent": 10,
     "Appointment": 3
   },
@@ -27,7 +27,8 @@
     },
     "Class": {
       "1": "{\"subject\":\"LoopBack\",\"id\":1,\"teacherId\":1}",
-      "2": "{\"subject\":\"Entrepreneurship 101\",\"id\":2}"
+      "2": "{\"subject\":\"Entrepreneurship 101\",\"id\":2}",
+      "3": "{\"subject\":\"REST APIs\",\"id\":3,\"teacherId\":1}"
     },
     "ClassStudent": {
       "7": "{\"id\":7,\"classId\":1,\"studentId\":1}",
