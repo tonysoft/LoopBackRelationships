@@ -9,17 +9,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "students": {
-      "type": "hasAndBelongsToMany",
-      "model": "Student"
-    },
-    "teachers": {
-        "type": "belongsTo",
-        "model": "Teacher",
-        "foreignKey": "teacherId"
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "*",

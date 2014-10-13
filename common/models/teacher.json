@@ -11,18 +11,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "classes": {
-      "type": "hasMany",
-      "model": "Class"
-    },
-    "students": {
-      "type": "hasMany",
-      "model": "Student",
-      "through": "Appointment",
-      "foreignKey": "teacherId"
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "*",
