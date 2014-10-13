@@ -6,10 +6,10 @@
     "RoleMapping": 1,
     "Role": 1,
     "Student": 9,
-    "Teacher": 2,
-    "Class": 2,
-    "ClassStudent": 9,
-    "Appointment": 3
+    "Teacher": 3,
+    "Class": 3,
+    "ClassStudent": 10,
+    "Appointment": 4
   },
   "models": {
     "User": {},
@@ -22,18 +22,22 @@
       "8": "{\"firstName\":\"Dennis\",\"lastName\":\"Ashby\",\"id\":8}"
     },
     "Teacher": {
-      "1": "{\"firstName\":\"Issac\",\"lastName\":\"Roth\",\"password\":\"$2a$10$mWDng/5IRMBYBeCFBfP1K.tMhi1EomFMmNVkWhSsMYgt0/RCPA8Wq\",\"email\":\"issac@strongloop.com\",\"id\":1}"
+      "1": "{\"firstName\":\"Issac\",\"lastName\":\"Roth\",\"id\":1}",
+      "2": "{\"firstName\":\"Juan Carlos\",\"lastName\":\"Soto\",\"id\":2}"
     },
     "Class": {
-      "1": "{\"subject\":\"LoopBack\",\"id\":1,\"teacherId\":1}"
+      "1": "{\"subject\":\"LoopBack\",\"id\":1,\"teacherId\":1}",
+      "2": "{\"subject\":\"Entrepreneurship 101\",\"id\":2,\"teacherId\":2}"
     },
     "ClassStudent": {
       "7": "{\"id\":7,\"classId\":1,\"studentId\":1}",
-      "8": "{\"id\":8,\"classId\":1,\"studentId\":8}"
+      "8": "{\"id\":8,\"classId\":1,\"studentId\":8}",
+      "9": "{\"id\":9,\"classId\":2,\"studentId\":1}"
     },
     "Appointment": {
       "1": "{\"dateTime\":\"2014-10-15T15:15:00.000Z\",\"id\":1,\"teacherId\":1,\"studentId\":1}",
-      "2": "{\"dateTime\":\"2014-10-16T15:45:00.000Z\",\"id\":2,\"teacherId\":1,\"studentId\":8}"
+      "2": "{\"dateTime\":\"2014-10-16T15:45:00.000Z\",\"id\":2,\"teacherId\":1,\"studentId\":8}",
+      "3": "{\"dateTime\":\"2014-10-25T15:15:00.000Z\",\"id\":3,\"teacherId\":2,\"studentId\":1}"
     }
   }
 }

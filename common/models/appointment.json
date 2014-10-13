@@ -2,21 +2,28 @@
   "name": "Appointment",
   "plural": "Appointments",
   "base": "PersistedModel",
+  
   "properties": {
     "dateTime": {
       "type": "date",
       "required": true
     }
   },
-  "validations": [],
-  "relations": {},
-  "acls": [
-    {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "$unauthenticated",
-      "permission": "ALLOW"
+
+  "relations": {
+    "teachers": {
+        "type": "belongsTo",
+        "model": "Teacher",
+        "foreignKey": "teacherId"
+    },
+    "students": {
+        "type": "belongsTo",
+        "model": "Student",
+        "foreignKey": "studentId"
     }
-  ],
+  },
+  
+  "validations": [],
+  "acls": [],
   "methods": []
 }

@@ -1,6 +1,20 @@
 {
   "name": "Class",
   "plural": "Classes",
+  "relations": {
+
+    "students": {
+      "type": "hasAndBelongsToMany",
+      "model": "Student"
+    },
+    
+    "teachers": {
+        "type": "belongsTo",
+        "model": "Teacher",
+        "foreignKey": "teacherId"
+    }
+  },
+
   "base": "PersistedModel",
   "properties": {
     "subject": {
@@ -8,15 +22,8 @@
       "required": true
     }
   },
+
+  "acls": [],
   "validations": [],
-  "relations": {},
-  "acls": [
-    {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "$unauthenticated",
-      "permission": "ALLOW"
-    }
-  ],
   "methods": []
 }

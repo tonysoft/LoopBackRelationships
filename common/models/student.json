@@ -1,10 +1,23 @@
 {
   "name": "Student",
   "plural": "Students",
+
+  "relations": {
+    "classes": {
+      "type": "hasAndBelongsToMany",
+      "model": "Class"
+    },
+    "teachers": {
+      "type": "hasMany",
+      "model": "Teacher",
+      "through": "Appointment"
+    }
+
+  },
+  
   "base": "Person",
   "properties": {},
   "validations": [],
-  "relations": {},
   "acls": [
     {
       "accessType": "*",
