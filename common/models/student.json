@@ -4,7 +4,18 @@
   "base": "Person",
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "classes": {
+      "type": "hasAndBelongsToMany",
+      "model": "Class"
+    },
+    "teachers": {
+      "type": "hasMany",
+      "model": "Teacher",
+      "through": "Appointment",
+      "foreignKey": "teacherId"
+    }
+  },
   "acls": [
     {
       "accessType": "*",
