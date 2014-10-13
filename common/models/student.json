@@ -1,0 +1,28 @@
+{
+  "name": "Student",
+  "plural": "Students",
+  "base": "Person",
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "classes": {
+      "type": "hasAndBelongsToMany",
+      "model": "Class"
+    },
+    "teachers": {
+      "type": "hasMany",
+      "model": "Teacher",
+      "through": "Appointment",
+      "foreignKey": "teacherId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": []
+}

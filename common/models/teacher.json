@@ -1,0 +1,35 @@
+{
+  "name": "Teacher",
+  "plural": "Teachers",
+  "base": "User",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "classes": {
+      "type": "hasMany",
+      "model": "Class"
+    },
+    "students": {
+      "type": "hasMany",
+      "model": "Student",
+      "through": "Appointment",
+      "foreignKey": "teacherId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": []
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Person",
+  "plural": "People",
+  "base": "PersistedModel",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

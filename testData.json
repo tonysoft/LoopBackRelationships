@@ -1,0 +1,39 @@
+{
+  "ids": {
+    "User": 1,
+    "AccessToken": 1,
+    "ACL": 1,
+    "RoleMapping": 1,
+    "Role": 1,
+    "Student": 9,
+    "Teacher": 2,
+    "Class": 2,
+    "ClassStudent": 9,
+    "Appointment": 3
+  },
+  "models": {
+    "User": {},
+    "AccessToken": {},
+    "ACL": {},
+    "RoleMapping": {},
+    "Role": {},
+    "Student": {
+      "1": "{\"firstName\":\"Tony\",\"lastName\":\"Sukiennik\",\"id\":1}",
+      "8": "{\"firstName\":\"Dennis\",\"lastName\":\"Ashby\",\"id\":8}"
+    },
+    "Teacher": {
+      "1": "{\"firstName\":\"Issac\",\"lastName\":\"Roth\",\"password\":\"$2a$10$mWDng/5IRMBYBeCFBfP1K.tMhi1EomFMmNVkWhSsMYgt0/RCPA8Wq\",\"email\":\"issac@strongloop.com\",\"id\":1}"
+    },
+    "Class": {
+      "1": "{\"subject\":\"LoopBack\",\"id\":1,\"teacherId\":1}"
+    },
+    "ClassStudent": {
+      "7": "{\"id\":7,\"classId\":1,\"studentId\":1}",
+      "8": "{\"id\":8,\"classId\":1,\"studentId\":8}"
+    },
+    "Appointment": {
+      "1": "{\"dateTime\":\"2014-10-15T15:15:00.000Z\",\"id\":1,\"teacherId\":1,\"studentId\":1}",
+      "2": "{\"dateTime\":\"2014-10-16T15:45:00.000Z\",\"id\":2,\"teacherId\":1,\"studentId\":8}"
+    }
+  }
+}
