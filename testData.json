@@ -9,7 +9,7 @@
     "Teacher": 3,
     "Class": 3,
     "ClassStudent": 10,
-    "Appointment": 4
+    "Appointment": 3
   },
   "models": {
     "User": {},
@@ -27,7 +27,7 @@
     },
     "Class": {
       "1": "{\"subject\":\"LoopBack\",\"id\":1,\"teacherId\":1}",
-      "2": "{\"subject\":\"Entrepreneurship 101\",\"id\":2,\"teacherId\":2}"
+      "2": "{\"subject\":\"Entrepreneurship 101\",\"id\":2}"
     },
     "ClassStudent": {
       "7": "{\"id\":7,\"classId\":1,\"studentId\":1}",
@@ -36,8 +36,7 @@
     },
     "Appointment": {
       "1": "{\"dateTime\":\"2014-10-15T15:15:00.000Z\",\"id\":1,\"teacherId\":1,\"studentId\":1}",
-      "2": "{\"dateTime\":\"2014-10-16T15:45:00.000Z\",\"id\":2,\"teacherId\":1,\"studentId\":8}",
-      "3": "{\"dateTime\":\"2014-10-25T15:15:00.000Z\",\"id\":3,\"teacherId\":2,\"studentId\":1}"
+      "2": "{\"dateTime\":\"2014-10-16T15:45:00.000Z\",\"id\":2,\"teacherId\":1,\"studentId\":8}"
     }
   }
 }
