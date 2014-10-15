@@ -1,0 +1,37 @@
+body {
+  padding-top:50px;
+}
+.glyphicon-remove:hover {
+  cursor:pointer;
+}
+.paddedBlock {
+	display: inline-block;
+	padding-bottom:5px;
+}
+.alignRight {
+	float:right;
+}
+
+a {
+	color:#111199;
+	font-size:115%;
+}
+
+.biggerText {
+	font-size:115%;
+}
+
+.level1 {
+	background-color: #FFFFFF; !important;
+	margin-bottom: 3px;
+}
+
+.level2 {
+	background-color: #F9F9F9; !important;
+	margin-bottom: 3px;
+}
+
+.level3 {
+	background-color: #F3F3F3; !important;
+	margin-bottom: 3px;
+}

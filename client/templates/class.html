@@ -1,0 +1,20 @@
+<h1>Class Profile</h1>
+<hr>
+<div class="list-group">
+ 	<div class="list-group-item level1" style="cursor:default;">
+		<div class="paddedBlock">
+			<span class="biggerText">{{class.subject}}</span>
+	  		<span ng-if="class.teachers">
+	  			&nbsp;taught by: <a href="#/teacher/{{class.teachers.id}}">{{class.teachers.firstName}} {{class.teachers.lastName}}</a>
+	  		</span>
+  		</div>
+	 	<div ng-if="class.students" class="list-group-item level2" style="cursor:default;" ng-repeat="student in class.students">
+	  		<span>
+	  			<a href="#/student/{{student.id}}"> {{student.firstName}}&nbsp;{{student.lastName}}</a>
+	  				&nbsp;enrolled
+  			</span>
+		</div>
+	</div>
+</div>
+<br>
+<a href="/" class="alignRight">Student Enrollment</a>
