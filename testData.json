@@ -1,25 +1,28 @@
 {
   "ids": {
-    "User": 1,
+    "User": 2,
     "AccessToken": 1,
     "ACL": 1,
     "RoleMapping": 1,
     "Role": 1,
-    "Student": 9,
+    "Student": 10,
     "Teacher": 3,
     "Class": 4,
     "ClassStudent": 10,
     "Appointment": 3
   },
   "models": {
-    "User": {},
+    "User": {
+      "1": "{\"username\":\"tonysoft\",\"password\":\"$2a$10$EMFzei9KIkgPEsusHRE/gezIQZ3Tk7LkPb0J5AdxwD/BCDJeymxyS\",\"email\":\"tony@iRelate.us\",\"id\":1}"
+    },
     "AccessToken": {},
     "ACL": {},
     "RoleMapping": {},
     "Role": {},
     "Student": {
       "1": "{\"firstName\":\"Tony\",\"lastName\":\"Sukiennik\",\"id\":1}",
-      "8": "{\"firstName\":\"Dennis\",\"lastName\":\"Ashby\",\"id\":8}"
+      "8": "{\"firstName\":\"Dennis\",\"lastName\":\"Ashby\",\"id\":8}",
+      "9": "{\"firstName\":\"Ted\",\"lastName\":\"Smith\",\"id\":9}"
     },
     "Teacher": {
       "1": "{\"firstName\":\"Issac\",\"lastName\":\"Roth\",\"id\":1}",

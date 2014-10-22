@@ -1,7 +1,8 @@
 {
   "name": "Student",
   "plural": "Students",
-
+  "displayName": "Our Students",
+  "description": "People starving for knowledge...",
   "relations": {
     "classes": {
       "type": "hasAndBelongsToMany",
@@ -12,11 +13,16 @@
       "model": "Teacher",
       "through": "Appointment"
     }
-
   },
   
   "base": "Person",
-  "properties": {},
+  "properties": {
+    "stars": {
+      "type": "string",
+      "inputType": "text",
+      "label": "First Name"
+    }
+  },
   "validations": [],
   "acls": [],
   "methods": []

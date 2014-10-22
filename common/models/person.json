@@ -4,10 +4,14 @@
   "base": "PersistedModel",
   "properties": {
     "firstName": {
-      "type": "string"
+      "type": "string",
+      "inputType": "text",
+      "label": "First Name"
     },
     "lastName": {
-      "type": "string"
+      "type": "string",
+      "inputType": "text",
+      "label": "First Name"
     }
   },
   "validations": [],
