@@ -8,7 +8,7 @@
     "Student": 10,
     "Teacher": 3,
     "Class": 4,
-    "ClassStudent": 10,
+    "ClassStudent": 12,
     "Appointment": 3
   },
   "models": {
@@ -35,9 +35,8 @@
     },
     "ClassStudent": {
       "7": "{\"id\":7,\"classId\":1,\"studentId\":1}",
-      "8": "{\"id\":8,\"classId\":1,\"studentId\":8}",
-      "9": "{\"id\":9,\"classId\":2,\"studentId\":1}"
-    },
+      "8": "{\"id\":8,\"classId\":1,\"studentId\":8}"
+     },
     "Appointment": {
       "1": "{\"dateTime\":\"2014-10-15T15:15:00.000Z\",\"id\":1,\"teacherId\":1,\"studentId\":1}",
       "2": "{\"dateTime\":\"2014-10-16T15:45:00.000Z\",\"id\":2,\"teacherId\":1,\"studentId\":8}"
