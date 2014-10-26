@@ -508,12 +508,67 @@ You can start exploring the **[Source Code for the Student Enrollment App](https
 
 ***
 
-###Accessing your API from within AngularJS Apps
+###Accessing our Modelled APIs from an App
 
-Coming soon...
+Consider the two images from our **Student Enrollment App** below based on the **API(( we created in **Part 1** above.
 
 ![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollmentBasic.png)
 ![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png)
+
+In the first image, we see a **Simple List** of **Students** produced by accessing our **API**'s **Student** Model ```find()``` method as in the code below.
+
+```
+function getStudents() {
+  Student							// access the Student Model Resource
+  .find()							// call the "find" method
+    .$promise                      
+    .then(function(results) {
+      $scope.students = results;	// and store the results
+    });
+}
+```
+
+Now let's exploit the **Model Relationships** we created in our **API** as illustrated in the second image above.  All we'll do is change the ```filter``` we pass into the ```find()``` method as seen in the code below.
+
+```
+function getStudents() {
+  var filter =  { "filter":
+                  {
+                    "include":  { "relation": "classes", 
+                                  "scope":  { 
+                                              "include": ["teachers","students"]
+                                            }
+                                }
+                  }
+                };
+
+  Student                         // access the Student Model Resource
+    .find(filter)                 // call the "find" method
+    .$promise                      
+    .then(function(results) {
+      $scope.students = results;  // and store the results
+    });
+}
+```
+
+In english, the ```filter``` applied above can be described as follows:
+
+* ```find``` **Students**
+
+* and also ```include``` all of the **Classes** ( ```relation``` ```classes``` ) in which the **Student** is enrolled.
+
+* Within the ```scope``` of all of the **Classes** related to and retrieved for each **Student**,
+
+* also ```include``` the **Teacher** ( ```relation``` ```teachers``` ) who teaches the **Class** as well as ALL other **Students** ( ```relation``` ```students``` ) enrolled in the **Class**...
+
+In the ensuing sections below, we'll de-mystify all of the **LoopBack / Angular Magic** that took place to display that list of **Students** and their related **Classes**, **Teachers**, and **Students** (classmates).
+
+***
+
+### Generating Angular Resources to access your LoopBack API
+
+
+
 
 
 

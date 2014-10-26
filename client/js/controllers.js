@@ -7,18 +7,22 @@ angular
   .controller('StudentsCtrl', ['$scope', '$state', 'Student', function($scope, $state,
       Student) {
     $scope.students = [];
-    var filter = {"filter":
-                  {
-                    "include": {"relation": "classes", "scope": {"include": ["teachers","students"]}}
-                  }
-                };
-    filter = {};
     function getStudents() {
-      Student
-        .find(filter)
-        .$promise
+      var filter =  { "filter":
+                      {
+                        "include":  { "relation": "classes", 
+                                      "scope":  { 
+                                                  "include": ["teachers","students"]
+                                                }
+                                    }
+                      }
+                    };
+
+      Student                         // access the Student Model Resource
+        .find(filter)                 // call the "find" method
+        .$promise                      
         .then(function(results) {
-          $scope.students = results;
+          $scope.students = results;  // and store the results
         });
     }
     getStudents();
