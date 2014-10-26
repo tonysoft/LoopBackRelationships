@@ -512,6 +512,7 @@ You can start exploring the **[Source Code for the Student Enrollment App](https
 
 Coming soon...
 
+![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png)
 
 
 
