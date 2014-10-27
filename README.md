@@ -510,7 +510,7 @@ You can start exploring the **[Source Code for the Student Enrollment App](https
 
 ###Accessing our Modelled APIs from an App
 
-Consider the two images from our **Student Enrollment App** below based on the **API(( we created in **Part 1** above.
+Consider the two images from our **Student Enrollment App** below based on the **API** we created in **Part 1** above.
 
 ![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollmentBasic.png)
 ![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png)
@@ -555,11 +555,11 @@ In english, the ```filter``` applied above can be described as follows:
 
 * ```find``` **Students**
 
-* and also ```include``` all of the **Classes** ( ```relation``` ```classes``` ) in which the **Student** is enrolled.
+* and also ```include``` all of the **Classes** ( ```relation```:```classes``` ) in which the **Student** is enrolled.
 
 * Within the ```scope``` of all of the **Classes** related to and retrieved for each **Student**,
 
-* also ```include``` the **Teacher** ( ```relation``` ```teachers``` ) who teaches the **Class** as well as ALL other **Students** ( ```relation``` ```students``` ) enrolled in the **Class**...
+* also ```include``` the **Teacher** ( ```relation```:```teachers``` ) who teaches the **Class** as well as ALL other **Students** ( ```relation```:```students``` ) enrolled in the **Class**...
 
 In the ensuing sections below, we'll de-mystify all of the **LoopBack / Angular Magic** that took place to display that list of **Students** and their related **Classes**, **Teachers**, and **Students** (classmates).
 
@@ -567,6 +567,29 @@ In the ensuing sections below, we'll de-mystify all of the **LoopBack / Angular 
 
 ### Generating Angular Resources to access your LoopBack API
 
+Once you've **created** and **related** your Models using **LoopBack**, you can explore the resulting **APIs** using **[LoopBack Explorer](http://localhost:3000/explorer)** (assuming you followed the **Installation Instructions** near the top of **Part 1**).
+
+Using **Explorer**, say you wanted to **[GET a List of all Students](http://localhost:3000/explorer/#!/Students/Student_find)**, you'd see the **GET URL**: **http://localhost:3000/api/Students** after you: ```Try it out!```.
+
+If you wanted to **hand craft Client App Access** to your **APIs**, you'd could use **AJAX** type calls with the **XMLHttpRequest** object.  
+
+But **LoopBack** provides much easier way to access your **APIs** from your **App** when it is based on the **AngularJS Framework**.  It does this with the **LoopBack Angular SDK** and the Terminal Session below shows how we generated the **Angular Resources** used to provide **API Access** for our **App**.  The code samples above used these **Resources**,
+  
+
+```
+$ cd /YourChosenDirectory/.../LoopBackRelationships/client
+ 
+$ lb-ng ../server/server.js js/lb-services.js
+Saving the generated services source to "js/lb-services.js"
+
+$ cd js
+
+$ ls
+app.js		controllers.js	lb-services.js
+
+```
+
+Once you install **strongloop**, **Terminal Commands** like **lb-ng** (LoopBack aNGular) are available as illustrated above.
 
 
 
