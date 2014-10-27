@@ -1,4 +1,355 @@
-##Introduction
+
+482
+483
+484
+485
+486
+487
+488
+489
+ 
+ 
+ 
+ 
+490
+491
+492
+493
+494
+495
+ 
+ 
+496
+497
+ 
+ 
+498
+499
+500
+501
+502
+503
+ 
+ 
+504
+505
+ 
+506
+507
+ 
+ 
+508
+509
+510
+511
+512
+513
+ 
+514
+515
+ 
+ 
+516
+ 
+ 
+517
+518
+ 
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+ 
+ 
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+ 
+559
+560
+ 
+561
+562
+ 
+ 
+563
+564
+ 
+ 
+565
+566
+567
+568
+569
+570
+ 
+ 
+571
+572
+ 
+ 
+573
+574
+ 
+575
+576
+ 
+ 
+ 
+ 
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+ 
+593
+594
+ 
+ 
+595
+596
+ 
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+ 
+ 
+ 
+ 
+627
+628
+629
+630
+631
+632
+633
+634
+      "lastName": "Sukiennik",
+      "id": 1
+    }
+  }
+]
+```
+ 
+**Note**: From **LoopBack Explorer**, when you want to **Query** your **Models**, the concept of **filter** is very useful and important.  In the example above the **LoopBack Explorer** will allow you enter a **filter** and entering "**{"where":{"studentId":1},"include":["teachers","students"]}** will yield the results listed above.
+ 
+***
+ 
+###Summary of Part 1 - Relating Models in the LoopBack API Server
+ 
+It's really easy to Model your Data Assets using **LoopBack**.  But you **APIs** becomes REALLY powerful when your **Interrelate** your **Models** in ways that make sense for your App.  
+ 
+Speaking of **Apps**, an **API** would be useless without **Apps**, so **Part 2** below will show you how to easily access your **API** from a **Single Page Web App** suitable for porting to **Mobile Devices**.
+ 
+***
+ 
+##Part 2 - Building a App which accesses your API
+ 
+First, run a **[Student Enrollment App](http://localhost:3000)** at our School and includes Classes, Teachers and easily and seamlessly explores all of their interrelationships.  
+ 
+**Note**: you will only be able to **Run the App** locally if you followed the **installation instructions** at the **Top of Part 1** above.
+ 
+You can start exploring the **[Source Code for the Student Enrollment App](https://github.com/tonysoft/LoopBackRelationships/tree/master/client)** and we'll be decomposing that code below.
+ 
+***
+ 
+###Accessing our Modelled APIs from an App
+ 
+Consider the two images from our **Student Enrollment App** below based on the **API** we created in **Part 1** above.
+ 
+![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollmentBasic.png)
+![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png)
+ 
+In the first image, we see a **Simple List** of **Students** produced by accessing our **API**'s **Student** Model ```find()``` method as in the code below.
+ 
+```
+function getStudents() {
+  Student                           // access the Student Model Resource
+  .find()                           // call the "find" method
+    .$promise                      
+    .then(function(results) {
+      $scope.students = results;    // and store the results
+    });
+}
+```
+ 
+Now let's exploit the **Model Relationships** we created in our **API** as illustrated in the second image above.  All we'll do is change the ```filter``` we pass into the ```find()``` method as seen in the code below.
+ 
+```
+function getStudents() {
+  var filter =  { "filter":
+                  {
+                    "include":  { "relation": "classes", 
+                                  "scope":  { 
+                                              "include": ["teachers","students"]
+                                            }
+                                }
+                  }
+                };
+ 
+  Student                         // access the Student Model Resource
+    .find(filter)                 // call the "find" method
+    .$promise                      
+    .then(function(results) {
+      $scope.students = results;  // and store the results
+    });
+}
+```
+ 
+In english, the ```filter``` applied above can be described as follows:
+ 
+* ```find``` **Students**
+ 
+* and also ```include``` all of the **Classes** ( ```relation```:```classes``` ) in which the **Student** is enrolled.
+ 
+* Within the ```scope``` of all of the **Classes** related to and retrieved for each **Student**,
+ 
+* also ```include``` the **Teacher** ( ```relation```:```teachers``` ) who teaches the **Class** as well as ALL other **Students** ( ```relation```:```students``` ) enrolled in the **Class**...
+ 
+In the ensuing sections below, we'll de-mystify all of the **LoopBack / Angular Magic** that took place to display that list of **Students** and their related **Classes**, **Teachers**, and **Students** (classmates).
+ 
+***
+ 
+### Generating Angular Resources to access your LoopBack API
+ 
+Once you've **created** and **related** your Models using **LoopBack**, you can explore the resulting **APIs** using **[LoopBack Explorer](http://localhost:3000/explorer)** (assuming you followed the **Installation Instructions** near the top of **Part 1**).
+ 
+Using **Explorer**, say you wanted to **[GET a List of all Students](http://localhost:3000/explorer/#!/Students/Student_find)**, you'd see the **GET URL**: **http://localhost:3000/api/Students** after you: ```Try it out!```.
+ 
+If you wanted to **hand craft Client App Access** to your **APIs**, you'd could use **AJAX** type calls with the **XMLHttpRequest** object.  
+ 
+But **LoopBack** provides much easier way to access your **APIs** from your **App** when it is based on the **AngularJS Framework**.  It does this with the **LoopBack Angular SDK** and the Terminal Session below shows how we generated the **Angular Resources** used to provide **API Access** for our **App**.  The code samples above used these **Resources**,
+  
+ 
+```
+$ cd /YourChosenDirectory/.../LoopBackRelationships/client
+ 
+$ lb-ng ../server/server.js js/lb-services.js
+Saving the generated services source to "js/lb-services.js"
+ 
+$ cd js
+ 
+$ ls
+app.js      controllers.js  lb-services.js
+ 
+```
+ 
+Once you install **strongloop**, **Terminal Commands** like **lb-ng** (**L**oop**B**ack a**NG**ular) are available as illustrated above.
+ 
+Our **Student Enrollment App** is an **Angular Single Page App** accessed as a **Node.js Static Resource** at **[client/index.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/index.html)**
+ 
+Below is a snippet from **index.html** which shows the **script tags** that are needed to run our **App**.
+ 
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+ 
+    .
+    .
+    .
+    
+    <div class="container">
+      <div ui-view></div>
+    </div>
+ 
+    <script src="vendor/jquery/dist/jquery.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-resource/angular-resource.js"></script>
+    <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+ 
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+ 
+    <script src="js/lb-services.js"></script>
+    
+  </body>
+</html>
+```
+ 
+You'll notice that **[client/js/lb-services.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/lb-services.js)** generated by **lb-ng** above is loaded to provide access to our **API**.  You don't really have to be concerned about the structuree of its contents and can pretty much treat it as a **Black Box** to access your **API**.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Introduction
 
 If you have been introduced to LoopBack, you know it’s easy to create Models which map to your Data Assets.
 
@@ -6,62 +357,44 @@ This Document and Sample Application will help you understand how to create mean
 
 So let’s dive right in and set the scene at a School where “Students” take “Classes” taught by “Teachers” and where “Students” and “Teachers” schedule “Appointments” for one-on-one learning sessions.
 
-Using the technical Relationship Terminology used when declaring LoopBack Models, let’s list the Relationships which define the interactions within our School.  Pardon us if the English sounds awkward but we think you’ll get the idea and learn the keywords at the same time.
+Using the technical Relationship Terminology used when declaring LoopBack Models, let’s list the Relationships which define the interactions within our School. Pardon us if the English sounds awkward but we think you’ll get the idea and learn the keywords at the same time.
 
-* Classes **belongsTo** Teachers.  In other words, Teachers **own** the Classes and only one Teacher teaches a Class (at least at this school).
+Classes belongsTo Teachers. In other words, Teachers own the Classes and only one Teacher teaches a Class (at least at this school).
+Teachers hasMany Classes. In other words, Teachers sometimes teach many Classes (and exclusively own each one of them).
+Students hasAndBelongsToMany Classes. Students have one or more Classes and Classes have one or more Students.
+Classes hasAndBelongsToMany Students. Again, Students have one or more Classes and Classes have one or more Students.
+Students hasMany Teachers related through Appointments. Although Teachers and Students are indirectly related through their common Classes, the direct relationships between many Students and many Teachers takes place through the Appointments they arrange.
+Symmetrically, Teachers hasMany Students related through Appointments. As stated above, although Teachers and Students are indirectly related through their common Classes, the direct relationships between many Students and many Teachers takes place through the Appointments they arrange.
+That sets the scene so now let’s build a working School from the ground up.
 
+Part 1 - Relating Models in the LoopBack API Server
 
-* Teachers **hasMany** Classes.  In other words, Teachers sometimes teach **many** Classes (and ** exclusively own** each one of them).
+To follow along as you read below, you might want to install and run this LoopBack / Node.js REST API Server App. Follow the steps below.
 
-
-* Students **hasAndBelongsToMany** Classes.  **Students have** one or more **Classes** and **Classes have** one or more **Students**.
-
-
-* Classes **hasAndBelongsToMany** Students.  Again, **Students have** one or more **Classes** and **Classes have** one or more Students.
-
-
-* Students **hasMany** Teachers related **through** Appointments.  Although **Teachers** and **Students** are indirectly related through their common **Classes**, the direct relationships between **many** Students and **many** Teachers takes place **through** the **Appointments** they arrange.
-
-
-* Symmetrically, Teachers **hasMany** Students related **through** Appointments.  As stated above, although **Teachers** and **Students** are indirectly related through their common **Classes**, the direct relationships between **many** Students and **many** Teachers takes place **through** the **Appointments** they arrange.
-
-That sets the scene so now let’s build a working **School** from the ground up.
-
-##Part 1 - Relating Models in the LoopBack API Server
-
-To follow along as you read below, you might want to install and run this LoopBack / Node.js REST API Server App.  Follow the steps below.
-
-```
 Clone or Download a Zip of this GitHub Repository.
 
 $ cd /YourChosenDirectory/.../LoopBackRelationships
-	// wherever you saved the Project
-    
+    // wherever you saved the Project
+
 $ npm install -g strongloop
-	// So that you have LoopBack available if you haven't done so already
-    
+    // So that you have LoopBack available if you haven't done so already
+
 $ npm install
-	// Ensures that all of the Project Dependencies are installed.
-    
+    // Ensures that all of the Project Dependencies are installed.
+
 $ node ./server/server.js
 
-	Browse your REST API at http://localhost:3000/explorer
-	Web server listening at: http://localhost:3000/
-    
+    Browse your REST API at http://localhost:3000/explorer
+    Web server listening at: http://localhost:3000/
+
 _____>  From another Terminal session
 
 $ curl http://localhost:3000/api/classes
-	// Will show you the List of Classes in the Database in JSON Format
+    // Will show you the List of Classes in the Database in JSON Format
+Basic Models
 
-    
-```
+Let’s start by looking at the Class Model and notice that No “relations” are defined…
 
-
-###Basic Models
-
-Let’s start by looking at the **Class** Model and notice that **No “relations”** are defined…
-
-```
 {
   "name": "Class",
   "plural": "Classes",
@@ -79,11 +412,8 @@ Let’s start by looking at the **Class** Model and notice that **No “relation
   "validations": [],
   "methods": []
 }
-```
+Next, let’s look at the Teacher Model and notice that No “relations” are defined…
 
-Next, let’s look at the **Teacher** Model and notice that **No “relations”** are defined…
-
-```
 {
   "name": "Teacher",
   "plural": "Teachers",
@@ -96,11 +426,8 @@ Next, let’s look at the **Teacher** Model and notice that **No “relations”
   "validations": [],
   "methods": []
 }
-```
+Note above that the Teacher Model is is based on another Model named Person. For completeness, here is what the Person Model looks like.
 
-Note above that the **Teacher** Model is is **based** on another Model named **Person**.  For completeness, here is what the **Person** Model looks like.
-
-```
 {
   "name": "Person",
   "plural": "People",
@@ -118,28 +445,24 @@ Note above that the **Teacher** Model is is **based** on another Model named **P
     }
   }
 }
-```
-
 At this point, just about all we can do is Create, Read, Update, and Delete Classes and Teachers.
 
-List all Classes: **http://localhost:3000/api/Classes**
+List all Classes: http://localhost:3000/api/Classes
 
-List all Teachers: **http://localhost:3000/api/Teachers** 
+List all Teachers: http://localhost:3000/api/Teachers
 
-**NOTE:** Whenever you see a links like the ones above and you have installed and run the LoopBack REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data.  You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
+NOTE: Whenever you see a links like the ones above and you have installed and run the LoopBack REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data. You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
 
-*The easiest way to Explore and manipulate the APIs you create with Loopback is to use LoopBack Explorer: (http://localhost:3000/explorer)*
+The easiest way to Explore and manipulate the APIs you create with Loopback is to use LoopBack Explorer: (http://localhost:3000/explorer)
 
-***
+Classes related to Teachers
 
-###Classes related to Teachers
-Now, let’s set up the Relationships between **Classes** and **Teachers**.
+Now, let’s set up the Relationships between Classes and Teachers.
 
-Classes **belongsTo** Teachers.  In other words, **Teachers own** the **Classes** and only one **Teacher** teaches a **Class** (at least at our School).
+Classes belongsTo Teachers. In other words, Teachers own the Classes and only one Teacher teaches a Class (at least at our School).
 
-First, let’s look at the additions we’ll make to the **Class** Model within [**common/models/class.json**](https://github.com/tonysoft/LoopBackRelationships/blob/master/common/models/class.json)
+First, let’s look at the additions we’ll make to the Class Model within common/models/class.json
 
-```
 {
   "name": "Class",
   "plural": "Classes",
@@ -151,11 +474,8 @@ First, let’s look at the additions we’ll make to the **Class** Model within 
     }
   },
 …
-```
+Teachers hasMany Classes (pardon the grammar). In other words, Teachers sometimes teach many Classes (and own each one of them). Next, let’s look at the additions we’ll make to the Teacher Model within common/models/teacher.json
 
-Teachers **hasMany** Classes (pardon the grammar).  In other words, Teachers sometimes teach **many** Classes (and **own** each one of them). Next, let’s look at the additions we’ll make to the **Teacher** Model within  [**common/models/teacher.json**](https://github.com/tonysoft/LoopBackRelationships/blob/master/common/models/teacher.json)
-
-```
 {
   "name": "Teacher",
   "plural": "Teachers",
@@ -167,33 +487,27 @@ Teachers **hasMany** Classes (pardon the grammar).  In other words, Teachers som
     }
   },
 …
-```
+Let’s now take a look at what Classes have been assigned to Teachers 1…
 
-Let’s now take a look at what **Classes** have been assigned to **Teachers 1**…
+http://localhost:3000/api/Teachers/1/classes?filter={"include":"teachers"}
 
-** http://localhost:3000/api/Teachers/1/classes?filter={"include":"teachers"} **
+If you try to check to see the Classes assigned to Teacher 2, you’d get an empty result.
 
-If you try to check to see the **Classes** assigned to **Teacher 2**, you’d get an empty result. 
+http://localhost:3000/api/Teachers/2/classes?filter={"include":"teachers"}
 
-** http://localhost:3000/api/Teachers/2/classes?filter={"include":"teachers"} **
+So let’s assign a Class to Teacher 2. Let’s assume that we have a Class with an ID of 2 and we want to assigned Teacher 2 to this Class. Because Classes belongsTo Teachers, the way to accomplish this is simply to Update (http PUT) the Class with ID 2…
 
-So let’s assign a **Class** to **Teacher 2**.  Let’s assume that we have a **Class** with an **ID of 2** and we want to assigned **Teacher 2** to this **Class**.  Because Classes **belongsTo** Teachers, the way to accomplish this is simply to **Update** (http **PUT**) the **Class** with **ID 2**…
+Where the body of the PUT message we pass along looks like below…
 
-Where the body of the **PUT** message we pass along looks like below…  
+NOTE that this is EASY to do within LoopBack Explorer:
+.../api/Classes
 
-**NOTE** that this is EASY to do within LoopBack Explorer:  
-** [.../api/Classes](http://localhost:3000/explorer/#!/Classes/Class_upsert)  **
-
-```
 {
   "id": 2,
   "teacherId": 2
 }
-```
+Now, if you checked Classes for Teacher 2 again, you see this…
 
-Now, if you checked **Classes** for **Teacher 2** again, you see this…
-
-```
 [
   {
     "subject": "Entrepreneurship 101",
@@ -206,30 +520,25 @@ Now, if you checked **Classes** for **Teacher 2** again, you see this…
     }
   }
 ]
-```
+Students and Classes
 
-***
+Now, let’s set up the Relationships between Classes and Students.
 
-###Students and Classes
+Students hasAndBelongsToMany Classes. In other words, Students have one or more Classes and Classes have one or more Students.
 
-Now, let’s set up the **Relationships** between **Classes** and **Students**.
+First, let’s look at the additions we’ll make to the Class Model within common/models/class.json
 
-Students **hasAndBelongsToMany** Classes.  In other words, **Students have** one or more **Classes** and **Classes have** one or more **Students**.
-
-First, let’s look at the additions we’ll make to the **Class** Model within [**common/models/class.json**](https://github.com/tonysoft/LoopBackRelationships/blob/master/common/models/class.json)
-
-```
 {
   "name": "Class",
   "plural": "Classes",
-  
+
   "relations": {
 
     "students": {
       "type": "hasAndBelongsToMany",
       "model": "Student"
     },
-    
+
     "teachers": {
         "type": "belongsTo",
         "model": "Teacher",
@@ -237,11 +546,8 @@ First, let’s look at the additions we’ll make to the **Class** Model within 
     }
   },
 ...
-```
+Then, let’s look at the symmetrical additions we’ll make to the Student Model within common/models/student.json
 
-Then, let’s look at the symmetrical additions we’ll make to the Student Model within  [**common/models/student.json**](https://github.com/tonysoft/LoopBackRelationships/blob/master/common/models/student.json)
-
-```
 {
   "name": "Student",
   "plural": "Students",
@@ -253,14 +559,10 @@ Then, let’s look at the symmetrical additions we’ll make to the Student Mode
     }
   },
 ...
+Now, if we want to look at what Classes a Student is taking we can use this API Link. And, while we’re at it, let’s list ALL of the Students in that Class...
 
-```
+http://localhost:3000/api/Students/1/classes?filter={"include":"students"}
 
-Now, if we want to look at what **Classes** a **Student** is taking we can use this API Link.  And, while we’re at it, let’s list **ALL** of the **Students** in that **Class**...
-
-** http://localhost:3000/api/Students/1/classes?filter={"include":"students"} **
-
-```
 [
   {
     "subject": "LoopBack",
@@ -280,21 +582,18 @@ Now, if we want to look at what **Classes** a **Student** is taking we can use t
     ]
   }
 ]
-```
+If we want to add another Class for a Student: Say Student 1 now wants to enroll in Class 2 we'd simply use one of the API Links below…
 
-If we want to add another **Class** for a **Student**: Say **Student 1** now wants to enroll in **Class 2** we'd simply use one of the API Links below…
-
-** [.../api/Students/1/classes/rel/2](http://localhost:3000/explorer/#!/Students/Student_prototype_link_classes) **
+.../api/Students/1/classes/rel/2
 
 or
 
-** [.../api/Classes/2/students/rel/1](http://localhost:3000/explorer/#!/Classes/Class_prototype_link_students) **
+.../api/Classes/2/students/rel/1
 
-If we again want to look at the **Classes** taken by **Student 1** as well ALL of the **Students** in each **Class** as well as the **Teachers** who teach the **Classes**, we’d use this API Link…
+If we again want to look at the Classes taken by Student 1 as well ALL of the Students in each Class as well as the Teachers who teach the Classes, we’d use this API Link…
 
 http://localhost:3000/api/Students/1/classes?filter={"include":["students","teachers"]}
 
-```
 [
   {
     "subject": "LoopBack",
@@ -336,25 +635,21 @@ http://localhost:3000/api/Students/1/classes?filter={"include":["students","teac
     ]
   }
 ]
-```
-***
+Teachers and Students related through Appointments
 
-###Teachers and Students related **through** Appointments
+We’re almost done now with the last task to relate two Models through a third.
 
-We’re almost done now with the last task to relate two Models **through** a third.
+In the discussion above about Students and Classes there was a direct relationship between the two Models. Students can have many Classes and Classes can have many Students.
 
-In the discussion above about **Students** and **Classes** there was a direct relationship between the two Models.  **Students** can have many **Classes** and **Classes** can have many **Students**.
+When we think about creating Appointments between Students and Teachers, we want to keep some extra information about the relationship such as the Date / Time of the Appointment. It wouldn’t make sense to keep the Date and Time within either Student or Teacher, so the Appointment Model will serve the purpose of joining Students and Teachers as well as keeping the other details straight.
 
-When we think about creating **Appointments** between **Students** and **Teachers**, we want to keep some extra information about the relationship such as the **Date / Time** of the **Appointment**.  It wouldn’t make sense to keep the Date and Time within either **Student** or **Teacher**, so the  **Appointment** Model will serve the purpose of joining **Students** and **Teachers** as well as keeping the other details straight.
+First, let’s take a look at the Appointment Model within common/models/appointment.json
 
-First, let’s take a look at the **Appointment** Model within  [**common/models/appointment.json**](https://github.com/tonysoft/LoopBackRelationships/blob/master/common/models/appointment.json)
-
-```
 {
   "name": "Appointment",
   "plural": "Appointments",
   "base": "PersistedModel",
-  
+
   "properties": {
     "dateTime": {
       "type": "date",
@@ -374,18 +669,15 @@ First, let’s take a look at the **Appointment** Model within  [**common/models
         "foreignKey": "studentId"
     }
   },
-  
+
   "validations": [],
   "acls": [],
   "methods": []
 }
-```
+As you can see, the Appointment defines a date(time) property as well as two relations which imply that ownership of the Appointment by a specific Student and Teacher.
 
-As you can see, the **Appointment** defines a **date(time)** property as well as two relations which imply that ownership of the **Appointment** by a specific **Student** and **Teacher**.
+Now if we again look at common/models/student.json we’ll see the relation which binds the Student to the Teacher “through” the Appointment.
 
-Now if we again look at [**common/models/student.json**](https://github.com/tonysoft/LoopBackRelationships/blob/master/common/models/student.json) we’ll see the relation which binds the **Student** to the **Teacher** **“through”** the **Appointment**.
-
-```
 {
   "name": "Student",
   "plural": "Students",
@@ -405,12 +697,8 @@ Now if we again look at [**common/models/student.json**](https://github.com/tony
 
   },
   ...
-  ```
-  
-Symmetrically, if we again look at [**common/models/teacher.json**](https://github.com/tonysoft/LoopBackRelationships/blob/master/common/models/teacher.json) we’ll see the relation which binds the **Teacher** to the **Student** **“through”** the **Appointment**.
+Symmetrically, if we again look at common/models/teacher.json we’ll see the relation which binds the Teacher to the Student “through” the Appointment.
 
-
-```
 {
   "name": "Teacher",
   "plural": "Teachers",
@@ -420,7 +708,7 @@ Symmetrically, if we again look at [**common/models/teacher.json**](https://gith
       "type": "hasMany",
       "model": "Class"
     },
-    
+
     "students": {
       "type": "hasMany",
       "model": "Student",
@@ -429,27 +717,21 @@ Symmetrically, if we again look at [**common/models/teacher.json**](https://gith
     }
   },
 ...
-```
+Let’s say we want to CREATE an Appointment between Student 1 and Teacher 2. Because Appointments belongsTo Teachers as well as belongsTo Students, the way to CREATE an Appointment is to (http POST) as below...
 
-Let’s say we want to CREATE an **Appointment** between **Student 1** and **Teacher 2**.  Because Appointments **belongsTo** Teachers as well as **belongsTo** Students, the way to CREATE an Appointment is to (http POST) as below...
+POST: ../api/Appointments
 
-POST:  ** [../api/Appointments](http://localhost:3000/explorer/#!/Appointments/Appointment_create) **
+The body of the POST message we pass along looks like below...
 
-The **body** of the **POST** message we pass along looks like below...
-
-```
 {
   "dateTime": "2014-10-25 8:15",
   "teacherId": 2,
   "studentId": 1
 }
-```
+Lastly, let’s look at the Appointments for Student 1. Just enter this API Link:
 
-Lastly, let’s look at the **Appointments** for **Student 1**.  Just enter this API Link:
+.../api/Appointments?filter={"where":{"studentId":1},"include":["teachers","students"
 
-**[.../api/Appointments?filter={"where":{"studentId":1},"include":["teachers","students"](http://localhost:3000/explorer/#!/Appointments/Appointment_find)**
-
-```
 [
   {
     "dateTime": "2014-10-15T15:15:00.000Z",
@@ -484,53 +766,40 @@ Lastly, let’s look at the **Appointments** for **Student 1**.  Just enter this
     }
   }
 ]
-```
+Note: From LoopBack Explorer, when you want to Query your Models, the concept of filter is very useful and important. In the example above the LoopBack Explorer will allow you enter a filter and entering "{"where":{"studentId":1},"include":["teachers","students"]} will yield the results listed above.
 
-**Note**: From **LoopBack Explorer**, when you want to **Query** your **Models**, the concept of **filter** is very useful and important.  In the example above the **LoopBack Explorer** will allow you enter a **filter** and entering "**{"where":{"studentId":1},"include":["teachers","students"]}** will yield the results listed above.
+Summary of Part 1 - Relating Models in the LoopBack API Server
 
-***
+It's really easy to Model your Data Assets using LoopBack. But you APIs becomes REALLY powerful when your Interrelate your Models in ways that make sense for your App.
 
-###Summary of Part 1 - Relating Models in the LoopBack API Server
+Speaking of Apps, an API would be useless without Apps, so Part 2 below will show you how to easily access your API from a Single Page Web App suitable for porting to Mobile Devices.
 
-It's really easy to Model your Data Assets using **LoopBack**.  But you **APIs** becomes REALLY powerful when your **Interrelate** your **Models** in ways that make sense for your App.  
+Part 2 - Building a App which accesses your API
 
-Speaking of **Apps**, an **API** would be useless without **Apps**, so **Part 2** below will show you how to easily access your **API** from a **Single Page Web App** suitable for porting to **Mobile Devices**.
+First, run a Student Enrollment App at our School and includes Classes, Teachers and easily and seamlessly explores all of their interrelationships.
 
-***
+Note: you will only be able to Run the App locally if you followed the installation instructions at the Top of Part 1 above.
 
-##Part 2 - Building a App which accesses your API
+You can start exploring the Source Code for the Student Enrollment App and we'll be decomposing that code below.
 
-First, run a **[Student Enrollment App](http://localhost:3000)** at our School and includes Classes, Teachers and easily and seamlessly explores all of their interrelationships.  
+Accessing our Modelled APIs from an App
 
-**Note**: you will only be able to **Run the App** locally if you followed the **installation instructions** at the **Top of Part 1** above.
+Consider the two images from our Student Enrollment App below based on the API we created in Part 1 above.
 
-You can start exploring the **[Source Code for the Student Enrollment App](https://github.com/tonysoft/LoopBackRelationships/tree/master/client)** and we'll be decomposing that code below.
+Student Enrollment Student Enrollment
 
-***
+In the first image, we see a Simple List of Students produced by accessing our API's Student Model find() method as in the code below.
 
-###Accessing our Modelled APIs from an App
-
-Consider the two images from our **Student Enrollment App** below based on the **API** we created in **Part 1** above.
-
-![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollmentBasic.png)
-![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png)
-
-In the first image, we see a **Simple List** of **Students** produced by accessing our **API**'s **Student** Model ```find()``` method as in the code below.
-
-```
 function getStudents() {
-  Student							// access the Student Model Resource
-  .find()							// call the "find" method
+  Student                            // access the Student Model Resource
+  .find()                            // call the "find" method
     .$promise                      
     .then(function(results) {
-      $scope.students = results;	// and store the results
+      $scope.students = results;    // and store the results
     });
 }
-```
+Now let's exploit the Model Relationships we created in our API as illustrated in the second image above. All we'll do is change the filter we pass into the find() method as seen in the code below.
 
-Now let's exploit the **Model Relationships** we created in our **API** as illustrated in the second image above.  All we'll do is change the ```filter``` we pass into the ```find()``` method as seen in the code below.
-
-```
 function getStudents() {
   var filter =  { "filter":
                   {
@@ -549,61 +818,47 @@ function getStudents() {
       $scope.students = results;  // and store the results
     });
 }
-```
+In english, the filter applied above can be described as follows:
 
-In english, the ```filter``` applied above can be described as follows:
+find Students
+and also include all of the Classes ( relation:classes ) in which the Student is enrolled.
+Within the scope of all of the Classes related to and retrieved for each Student,
+also include the Teacher ( relation:teachers ) who teaches the Class as well as ALL other Students ( relation:students ) enrolled in the Class...
+In the ensuing sections below, we'll de-mystify all of the LoopBack / Angular Magic that took place to display that list of Students and their related Classes, Teachers, and Students (classmates).
 
-* ```find``` **Students**
+Generating Angular Resources to access your LoopBack API
 
-* and also ```include``` all of the **Classes** ( ```relation```:```classes``` ) in which the **Student** is enrolled.
+Once you've created and related your Models using LoopBack, you can explore the resulting APIs using LoopBack Explorer (assuming you followed the Installation Instructions near the top of Part 1).
 
-* Within the ```scope``` of all of the **Classes** related to and retrieved for each **Student**,
+Using Explorer, say you wanted to GET a List of all Students, you'd see the GET URL: http://localhost:3000/api/Students after you: Try it out!.
 
-* also ```include``` the **Teacher** ( ```relation```:```teachers``` ) who teaches the **Class** as well as ALL other **Students** ( ```relation```:```students``` ) enrolled in the **Class**...
+If you wanted to hand craft Client App Access to your APIs, you'd could use AJAX type calls with the XMLHttpRequest object.
 
-In the ensuing sections below, we'll de-mystify all of the **LoopBack / Angular Magic** that took place to display that list of **Students** and their related **Classes**, **Teachers**, and **Students** (classmates).
+But LoopBack provides much easier way to access your APIs from your App when it is based on the AngularJS Framework. It does this with the LoopBack Angular SDK and the Terminal Session below shows how we generated the Angular Resources used to provide API Access for our App. The code samples above used these Resources,
 
-***
-
-### Generating Angular Resources to access your LoopBack API
-
-Once you've **created** and **related** your Models using **LoopBack**, you can explore the resulting **APIs** using **[LoopBack Explorer](http://localhost:3000/explorer)** (assuming you followed the **Installation Instructions** near the top of **Part 1**).
-
-Using **Explorer**, say you wanted to **[GET a List of all Students](http://localhost:3000/explorer/#!/Students/Student_find)**, you'd see the **GET URL**: **http://localhost:3000/api/Students** after you: ```Try it out!```.
-
-If you wanted to **hand craft Client App Access** to your **APIs**, you'd could use **AJAX** type calls with the **XMLHttpRequest** object.  
-
-But **LoopBack** provides much easier way to access your **APIs** from your **App** when it is based on the **AngularJS Framework**.  It does this with the **LoopBack Angular SDK** and the Terminal Session below shows how we generated the **Angular Resources** used to provide **API Access** for our **App**.  The code samples above used these **Resources**,
-  
-
-```
 $ cd /YourChosenDirectory/.../LoopBackRelationships/client
- 
+
 $ lb-ng ../server/server.js js/lb-services.js
 Saving the generated services source to "js/lb-services.js"
 
 $ cd js
 
 $ ls
-app.js		controllers.js	lb-services.js
+app.js        controllers.js    lb-services.js
+Once you install strongloop, Terminal Commands like lb-ng (LoopBack aNGular) are available as illustrated above.
 
-```
+Our Student Enrollment App is an Angular Single Page App accessed as a Node.js Static Resource at client/index.html
 
-Once you install **strongloop**, **Terminal Commands** like **lb-ng** (**L**oop**B**ack a**NG**ular) are available as illustrated above.
+Below is a snippet from index.html which shows the script tags that are needed to run our App.
 
-Our **Student Enrollment App** is an **Angular Single Page App** accessed as a **Node.js Static Resource** at **[client/index.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/index.html)**
-
-Below is a snippet from **index.html** which shows the **script tags** that are needed to run our **App**.
-
-```
 <!DOCTYPE html>
 <html lang="en">
   <head>
 
-	.
     .
     .
-    
+    .
+
     <div class="container">
       <div ui-view></div>
     </div>
@@ -618,14 +873,7 @@ Below is a snippet from **index.html** which shows the **script tags** that are 
     <script src="js/controllers.js"></script>
 
     <script src="js/lb-services.js"></script>
-    
+
   </body>
 </html>
-```
-
-You'll notice that **[client/js/lb-services.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/lb-services.js)** generated by **lb-ng** above is loaded to provide access to our **API**.
-
-
-
-
-
+You'll notice that client/js/lb-services.js generated by lb-ng above is loaded to provide access to our API. You don't really have to be concerned about the structuree of its contents and can pretty much treat it as a Black Box to access your API.
