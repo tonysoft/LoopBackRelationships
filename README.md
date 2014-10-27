@@ -36,11 +36,18 @@ To follow along as you read below, you might want to install and run this **[Loo
 ```
 Clone or Download a Zip of this GitHub Repository.
 
+Ensure that you have installed Node.js
+
+
+
 $ cd /YourChosenDirectory/.../LoopBackRelationships
 	// wherever you saved the Project
     
 $ npm install -g strongloop
 	// So that you have LoopBack available if you haven't done so already
+
+$ npm install -g bower
+	// This will be required to download dependencies during the app install.
     
 $ npm install
 	// Ensures that all of the Project Dependencies are installed.
@@ -718,8 +725,8 @@ As mentioned near the top of **Part 2**, you can run our **[Student Enrollment A
 
 
 
-
-
+***
+**More coming VERY soon...  Check again later today or tomorrow...**
 
 
 
