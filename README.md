@@ -1,12 +1,14 @@
-##Introduction
+##Creating Relationships between LoopBack Models
 
-If you have been introduced to LoopBack, you know it’s easy to create Models which map to your Data Assets.
+Contact **[Tony Sukiennik](mailto:tony@iRelate.us)** with feedback
+
+If you have been introduced to **[LoopBack](http://loopback.io/)**, you know it’s easy to create Models which map to your Data Assets.
 
 This Document and Sample Application will help you understand how to create meaningful Relationships between your Data Models.
 
 So let’s dive right in and set the scene at a School where “Students” take “Classes” taught by “Teachers” and where “Students” and “Teachers” schedule “Appointments” for one-on-one learning sessions.
 
-Using the technical Relationship Terminology used when declaring LoopBack Models, let’s list the Relationships which define the interactions within our School.  Pardon us if the English sounds awkward but we think you’ll get the idea and learn the keywords at the same time.
+Using the technical Relationship Terminology used when declaring **[LoopBack](http://loopback.io/)** Models, let’s list the Relationships which define the interactions within our School.  Pardon us if the English sounds awkward but we think you’ll get the idea and learn the keywords at the same time.
 
 * Classes **belongsTo** Teachers.  In other words, Teachers **own** the Classes and only one Teacher teaches a Class (at least at this school).
 
@@ -29,7 +31,7 @@ That sets the scene so now let’s build a working **School** from the ground up
 
 ##Part 1 - Relating Models in the LoopBack API Server
 
-To follow along as you read below, you might want to install and run this LoopBack / Node.js REST API Server App.  Follow the steps below.
+To follow along as you read below, you might want to install and run this **[LoopBack](http://loopback.io/)** / Node.js REST API Server App.  Follow the steps below.
 
 ```
 Clone or Download a Zip of this GitHub Repository.
@@ -126,7 +128,7 @@ List all Classes: **http://localhost:3000/api/Classes**
 
 List all Teachers: **http://localhost:3000/api/Teachers** 
 
-**NOTE:** Whenever you see a links like the ones above and you have installed and run the LoopBack REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data.  You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
+**NOTE:** Whenever you see a links like the ones above and you have installed and run the **[LoopBack](http://loopback.io/)** REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data.  You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
 
 *The easiest way to Explore and manipulate the APIs you create with Loopback is to use LoopBack Explorer: (http://localhost:3000/explorer)*
 
@@ -492,7 +494,7 @@ Lastly, let’s look at the **Appointments** for **Student 1**.  Just enter this
 
 ###Summary of Part 1 - Relating Models in the LoopBack API Server
 
-It's really easy to Model your Data Assets using **LoopBack**.  But you **APIs** becomes REALLY powerful when your **Interrelate** your **Models** in ways that make sense for your App.  
+It's really easy to Model your Data Assets using **[LoopBack](http://loopback.io/)**.  But you **APIs** becomes REALLY powerful when your **Interrelate** your **Models** in ways that make sense for your App.  
 
 Speaking of **Apps**, an **API** would be useless without **Apps**, so **Part 2** below will show you how to easily access your **API** from a **Single Page Web App** suitable for porting to **Mobile Devices**.
 
@@ -500,7 +502,7 @@ Speaking of **Apps**, an **API** would be useless without **Apps**, so **Part 2*
 
 ##Part 2 - Building a App which accesses your API
 
-First, run a **[Student Enrollment App](http://localhost:3000)** at our School and includes Classes, Teachers and easily and seamlessly explores all of their interrelationships.  
+First, run the **[Student Enrollment App](http://localhost:3000)** from our School which includes Classes, Teachers and easily and seamlessly explores all of their interrelationships.  
 
 **Note**: you will only be able to **Run the App** locally if you followed the **installation instructions** at the **Top of Part 1** above.
 
@@ -567,13 +569,13 @@ In the ensuing sections below, we'll de-mystify all of the **LoopBack / Angular 
 
 ### Generating Angular Resources to access your LoopBack API
 
-Once you've **created** and **related** your Models using **LoopBack**, you can explore the resulting **APIs** using **[LoopBack Explorer](http://localhost:3000/explorer)** (assuming you followed the **Installation Instructions** near the top of **Part 1**).
+Once you've **created** and **related** your Models using **[LoopBack](http://loopback.io/)**, you can explore the resulting **APIs** using **[LoopBack Explorer](http://localhost:3000/explorer)** (assuming you followed the **Installation Instructions** near the top of **Part 1**).
 
 Using **Explorer**, say you wanted to **[GET a List of all Students](http://localhost:3000/explorer/#!/Students/Student_find)**, you'd see the **GET URL**: **http://localhost:3000/api/Students** after you: ```Try it out!```.
 
 If you wanted to **hand craft Client App Access** to your **APIs**, you'd could use **AJAX** type calls with the **XMLHttpRequest** object.  
 
-But **LoopBack** provides much easier way to access your **APIs** from your **App** when it is based on the **AngularJS Framework**.  It does this with the **LoopBack Angular SDK** and the Terminal Session below shows how we generated the **Angular Resources** used to provide **API Access** for our **App**.  The code samples above used these **Resources**,
+But **[LoopBack](http://loopback.io/)** provides much easier way to access your **APIs** from your **App** when it is based on the **AngularJS Framework**.  It does this with the **LoopBack Angular SDK** and the Terminal Session below shows how we generated the **Angular Resources** used to provide **API Access** for our **App**.  The code samples above used these **Resources**,
   
 
 ```
@@ -624,6 +626,96 @@ Below is a snippet from **index.html** which shows the **script tags** that are 
 ```
 
 You'll notice that **[client/js/lb-services.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/lb-services.js)** generated by **lb-ng** above is loaded to provide access to our **API**.  You don't really have to be concerned about the structuree of its contents and can pretty much treat it as a **Black Box** to access your **API**.
+
+But you'll want to see what **API Methods** have been made available to you.
+
+
+```
+// From a new Terminal Session...
+
+$ cd /YourChosenDirectory/.../LoopBackRelationships/client
+ 
+$ lb-ng-doc js/lb-services.js
+Browse the documentation at http://localhost:3030/
+
+// You'll actually want to go the the Link below
+
+```
+
+**http://localhost:3030/documentation/loopback/lbServices/lbServices**
+
+Navigating to that Link will allow you to look at the **Methods** and their **Signatures**.  See the full **[LoopBack Angular SDK Documentation](http://docs.strongloop.com/display/LB/AngularJS+JavaScript+SDK)** for more options.
+
+***
+
+###Accessing your API from within your Angular App and its Controllers
+
+As discussed and illustrated above, the first step is to simply reference **[client/js/lb-services.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/lb-services.js)** from within **[client/index.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/index.html)**
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+	.
+    .
+    .
+    
+
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+
+    <script src="js/lb-services.js"></script>
+    
+  </body>
+</html>
+```
+
+In the snippent above, we also reference  **[client/js/app.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/app.js)** which serves to set up the **Routes** that will be available from your **Angular App**. In our simple App, it's pretty compact and is listed in full below.
+
+```
+angular
+  .module('app', [
+    'lbServices',
+    'ui.router'
+  ])
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
+      $urlRouterProvider) {
+    $stateProvider
+      .state('students', {
+        url: '/students',
+        templateUrl: 'templates/students.html',
+        controller: 'StudentsCtrl'
+      })
+      .state('student', {
+        url: '/student/:id',
+        templateUrl: 'templates/student.html',
+        controller: 'StudentCtrl'
+      })
+      .state('class', {
+        url: '/class/:id',
+        templateUrl: 'templates/class.html',
+        controller: 'ClassCtrl'
+      })
+      .state('teacher', {
+        url: '/teacher/:id',
+        templateUrl: 'templates/teacher.html',
+        controller: 'TeacherCtrl'
+      });
+    $urlRouterProvider.otherwise('/students');
+  }]);
+
+```
+
+If you're using **AngularJS**, you've seen this typical **App** definiation.  This important thing is specifying the ```dependency``` on our **LoopBack API Resource** from the module named ```'lbServices'```.
+
+The **Routes** we'll expose in our **App** are ```students```, ```student```, ```class```, and ```teacher```.  You can see how we've wired together the ```state```, ```url``` (path), ```templateUrl``` (html), and ```controller``` for each of the **Views** we will expose in our **App**.
+
+As mentioned near the top of **Part 2**, you can run our **[Student Enrollment App](http://localhost:3000)** (if you've set it up) to see how it flows from a list of **Students**, into drilldowns for a specific **Student**, **Teacher**, or **Class**.
+
+
+
+
 
 
 
