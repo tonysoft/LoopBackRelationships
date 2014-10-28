@@ -57,6 +57,11 @@ $ node ./server/server.js
 	Browse your REST API at http://localhost:3000/explorer
 	Web server listening at: http://localhost:3000/
     
+    // Alternatively...
+    
+$ PORT=6000 node ./server/server.js
+	// Would make your API explorable at http://localhost:6000/explorer
+    
 _____>  From another Terminal session
 
 $ curl http://localhost:3000/api/classes
@@ -178,9 +183,9 @@ Teachers **hasMany** Classes (pardon the grammar).  In other words, Teachers som
 …
 ```
 
-Let’s now take a look at what **Classes** have been assigned to **Teachers 1**…
+Let’s now take a look at what **Classes** have been assigned to **Teacher 1**…
 
-** http://localhost:3000/api/Teachers/1/classes?filter={"include":"teachers"} **
+**http://localhost:3000/api/Teachers/1/classes?filter={"include":"teachers"}**
 
 If you try to check to see the **Classes** assigned to **Teacher 2**, you’d get an empty result. 
 
@@ -651,6 +656,8 @@ Browse the documentation at http://localhost:3030/
 
 **http://localhost:3030/documentation/loopback/lbServices/lbServices**
 
+>**Note:** LoopBack API Documentation will always be viewable on Port 3030 as shown above.  The Port cannot be configured at this time.
+
 Navigating to that Link will allow you to look at the **Methods** and their **Signatures**.  See the full **[LoopBack Angular SDK Documentation](http://docs.strongloop.com/display/LB/AngularJS+JavaScript+SDK)** for more options.
 
 ***
@@ -918,7 +925,7 @@ And the resulting **View** looks like this...
 
 The **Student**, **Class**, and **Teacher** controllers co-reside in **[client/js/controllers.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/controllers.js)** so look at the subtle differences in the ```filter``` used to retrieve each one of these **Entities** via the **API**.  Check out the **[Querying model data LoopBack Documentation](http://docs.strongloop.com/display/LB/Querying+model+data)** and experiment further.  
 
-One difference you'll see if that the **Controllers** other than **Students** use a ```where``` clause within their ```filter``` as seen below in a snippet from the **Class Controller**.
+One difference you'll see if that the **Controllers** other than **Students** use a ```where``` clause within their ```filter``` as seen below in a snippet from the **Class Controller**.  You might ask: "Why didn't you use the ```findById``` method instead of the ```find``` method in these cases?  It's because ```findById``` does not accept a ```filter``` parameter and that's what we need in order to also retrieve the **Relationships** to each **Entity**.
 
 ```
 function getClass() {
@@ -941,9 +948,12 @@ Explore the **[Student View Template](https://github.com/tonysoft/LoopBackRelati
 
 ##Summary
 
-Enjoy how easy it is to **Create** and **Relate** your **LoopBack Models" and how easy it is to access the resulting **APIs** within the awesome **Apps** you'll dream of and create.
+Enjoy how easy it is to **Create** and **Relate** your **LoopBack Models** and how easy it is to access the resulting **APIs** within the awesome **Apps** you'll dream of and create.
 
-That's all folks...  
+
+Stay tuned for a tutorial on how to configure the **App** to **Create**, **Update**, and **Delete** both **Entities** as well as the **Relationships** between them.  
+
+That's all for now...  
 
 ***
 
