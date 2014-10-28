@@ -185,18 +185,18 @@ Teachers **hasMany** Classes (pardon the grammar).  In other words, Teachers som
 
 Let’s now take a look at what **Classes** have been assigned to **Teacher 1**…
 
-**http://localhost:3000/api/Teachers/1/classes?filter={"include":"teachers"}**
+**[http://localhost:3000/api/Teachers/1/classes?filter={"include":"teachers"}](http://localhost:3000/api/Teachers/1/classes?filter={"include":"teachers"})**
 
 If you try to check to see the **Classes** assigned to **Teacher 2**, you’d get an empty result. 
 
-** http://localhost:3000/api/Teachers/2/classes?filter={"include":"teachers"} **
+**[http://localhost:3000/api/Teachers/2/classes?filter={"include":"teachers"}](http://localhost:3000/api/Teachers/2/classes?filter={"include":"teachers"})**
 
 So let’s assign a **Class** to **Teacher 2**.  Let’s assume that we have a **Class** with an **ID of 2** and we want to assigned **Teacher 2** to this **Class**.  Because Classes **belongsTo** Teachers, the way to accomplish this is simply to **Update** (http **PUT**) the **Class** with **ID 2**…
 
 Where the body of the **PUT** message we pass along looks like below…  
 
-**NOTE** that this is EASY to do within LoopBack Explorer:  
-** [.../api/Classes](http://localhost:3000/explorer/#!/Classes/Class_upsert)  **
+>**NOTE** that this is EASY to do within LoopBack Explorer:  
+**[.../api/Classes](http://localhost:3000/explorer/#!/Classes/Class_upsert)**
 
 ```
 {
@@ -272,7 +272,7 @@ Then, let’s look at the symmetrical additions we’ll make to the Student Mode
 
 Now, if we want to look at what **Classes** a **Student** is taking we can use this API Link.  And, while we’re at it, let’s list **ALL** of the **Students** in that **Class**...
 
-** http://localhost:3000/api/Students/1/classes?filter={"include":"students"} **
+**[http://localhost:3000/api/Students/1/classes?filter={"include":"students"}](http://localhost:3000/api/Students/1/classes?filter={"include":"students"})**
 
 ```
 [
@@ -298,11 +298,11 @@ Now, if we want to look at what **Classes** a **Student** is taking we can use t
 
 If we want to add another **Class** for a **Student**: Say **Student 1** now wants to enroll in **Class 2** we'd simply use one of the API Links below…
 
-** [.../api/Students/1/classes/rel/2](http://localhost:3000/explorer/#!/Students/Student_prototype_link_classes) **
+**[.../api/Students/1/classes/rel/2](http://localhost:3000/explorer/#!/Students/Student_prototype_link_classes)**
 
 or
 
-** [.../api/Classes/2/students/rel/1](http://localhost:3000/explorer/#!/Classes/Class_prototype_link_students) **
+**[.../api/Classes/2/students/rel/1](http://localhost:3000/explorer/#!/Classes/Class_prototype_link_students)**
 
 If we again want to look at the **Classes** taken by **Student 1** as well ALL of the **Students** in each **Class** as well as the **Teachers** who teach the **Classes**, we’d use this API Link…
 
@@ -447,7 +447,7 @@ Symmetrically, if we again look at [**common/models/teacher.json**](https://gith
 
 Let’s say we want to CREATE an **Appointment** between **Student 1** and **Teacher 2**.  Because Appointments **belongsTo** Teachers as well as **belongsTo** Students, the way to CREATE an Appointment is to (http POST) as below...
 
-POST:  ** [../api/Appointments](http://localhost:3000/explorer/#!/Appointments/Appointment_create) **
+POST:  **[../api/Appointments](http://localhost:3000/explorer/#!/Appointments/Appointment_create)**
 
 The **body** of the **POST** message we pass along looks like below...
 
@@ -461,7 +461,7 @@ The **body** of the **POST** message we pass along looks like below...
 
 Lastly, let’s look at the **Appointments** for **Student 1**.  Just enter this API Link:
 
-**[.../api/Appointments?filter={"where":{"studentId":1},"include":["teachers","students"](http://localhost:3000/explorer/#!/Appointments/Appointment_find)**
+**[.../api/Appointments?filter={"where":{"studentId":1},"include":["teachers","students"]}](http://localhost:3000/explorer/#!/Appointments/Appointment_find)**
 
 ```
 [
@@ -500,7 +500,7 @@ Lastly, let’s look at the **Appointments** for **Student 1**.  Just enter this
 ]
 ```
 
->**Note**: From **LoopBack Explorer**, when you want to **Query** your **Models**, the concept of **filter** is very useful and important.  In the example above the **LoopBack Explorer** will allow you enter a **filter** and entering "**{"where":{"studentId":1},"include":["teachers","students"]}** will yield the results listed above.
+>**Note**: From **LoopBack Explorer**, when you want to **Query** your **Models**, the concept of **filter** is very useful and important.  In the example above the **LoopBack Explorer** will allow you enter a **filter** and entering ```**{"where":{"studentId":1},"include":["teachers","students"]}**``` will yield the results listed above.
 
 ***
 
@@ -603,7 +603,7 @@ app.js		controllers.js	lb-services.js
 
 ```
 
-Once you install **strongloop**, **Terminal Commands** like **lb-ng** (**L**oop**B**ack a**NG**ular) are available as illustrated above.
+Once you install **strongloop**, **Terminal Commands** like ```lb-ng``` (**LoopBack Angular**) are available as illustrated above.
 
 Our **Student Enrollment App** is an **Angular Single Page App** accessed as a **Node.js Static Resource** at **[client/index.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/index.html)**
 
@@ -732,7 +732,8 @@ As mentioned near the top of **Part 2**, you can run our **[Student Enrollment A
 ***
 ###Retrieving Data via your LoopBack APIs
 
-As you saw in the **Angular States** illustrated above, if we navigate to **http://localhost:3000/#/students** you'll see a list of all **Students** enrolled in our School as illustrated above left.
+As you saw in the **Angular States** illustrated above, if we navigate to
+**[http://localhost:3000/#/students](http://localhost:3000/#/students)** you'll see a list of all **Students** enrolled in our School as illustrated above left.
 
 ```
       .state('students', {
