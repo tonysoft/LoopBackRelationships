@@ -655,7 +655,7 @@ Navigating to that Link will allow you to look at the **Methods** and their **Si
 
 ***
 
-###Accessing your API from within your Angular App and its Controllers
+###Wiring your API from into your Angular App
 
 As discussed and illustrated above, the first step is to simply reference **[client/js/lb-services.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/lb-services.js)** from within **[client/index.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/index.html)**
 
@@ -716,18 +716,237 @@ angular
 
 If you're using **AngularJS**, you've seen this typical **App** definiation.  This important thing is specifying the ```dependency``` on our **LoopBack API Resource** from the module named ```'lbServices'```.
 
-The **Routes** we'll expose in our **App** are ```students```, ```student```, ```class```, and ```teacher```.  You can see how we've wired together the ```state```, ```url``` (path), ```templateUrl``` (html), and ```controller``` for each of the **Views** we will expose in our **App**.
+The **States** (Routes) we'll expose in our **App** are ```students```, ```student```, ```class```, and ```teacher```.  You can see how we've wired together the ```state```, ```url``` (path), ```templateUrl``` (html), and ```controller``` for each of the **Views** we will expose in our **App**.
 
-As mentioned near the top of **Part 2**, you can run our **[Student Enrollment App](http://localhost:3000)** (if you've set it up) to see how it flows from a list of **Students**, into drilldowns for a specific **Student**, **Teacher**, or **Class**.  
+As mentioned near the top of **Part 2**, you can run our **[Student Enrollment App](http://localhost:3000)** (if you've set it up) to see how it flows from a list of **Students**, into drilldowns for a specific **Student**, **Teacher**, or **Class**. See the **Students** and **Class** views illustrated below... 
 
 ![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png) ![Class Profile](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/Class.png)
 
+***
+###Retrieving Data via your LoopBack APIs
+
+As you saw in the **Angular States** illustrated above, if we navigate to **http://localhost:3000/#/students** you'll see a list of all **Students** enrolled in our School as illustrated above left.
+
+```
+      .state('students', {
+        url: '/students',
+        templateUrl: 'templates/students.html',
+        controller: 'StudentsCtrl'
+      })
+```
+
+For simplicity, we put all of our **Angular Controllers** into a single module at **[client/js/controllers.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/controllers.js)** and below, we'll see the **Students Controller** illustrated.
+
+```
+angular
+  .module('app')
 
 
+  .controller
+      ('StudentsCtrl', ['$scope', '$state', 'Student', function($scope, $state,
+          Student) {
+        $scope.students = [];
+        function getStudents() {          // Define a helper function  
+          var filter =  
+                { "filter":
+                  {
+                    "include":  { "relation": "classes", 
+                                  "scope":  { 
+                                              "include": ["teachers","students"]
+                                            }
+                                }
+                  }
+                };
+      
+          Student                         // access the Student Model Resource
+            .find(filter)                 // call the "find" method with a "filter"
+            .$promise                      
+            .then(function(results) {
+              $scope.students = results;  // and store the results
+            });
+        }
+        
+        getStudents();                    // When the Controller is loaded...
+      
+    }])
+```
+
+The **JSON** return from ```results``` above and stored in ```$scope.students``` looks like this below...
+
+```
+[{
+  "firstName": "Tony",
+  "lastName": "Sukiennik",
+  "id": 1,
+  "classes": [{
+    "subject": "LoopBack",
+    "id": 1,
+    "teacherId": 1,
+    "teachers": {
+      "firstName": "Issac",
+      "lastName": "Roth",
+      "id": 1
+    },
+    "students": [{
+      "firstName": "Tony",
+      "lastName": "Sukiennik",
+      "id": 1
+    }, {
+      "firstName": "Dennis",
+      "lastName": "Ashby",
+      "id": 8
+    }]
+  }]
+}, {
+  "firstName": "Dennis",
+  "lastName": "Ashby",
+  "id": 8,
+  "classes": [{
+    "subject": "LoopBack",
+    "id": 1,
+    "teacherId": 1,
+    "teachers": {
+      "firstName": "Issac",
+      "lastName": "Roth",
+      "id": 1
+    },
+    "students": [{
+      "firstName": "Tony",
+      "lastName": "Sukiennik",
+      "id": 1
+    }, {
+      "firstName": "Dennis",
+      "lastName": "Ashby",
+      "id": 8
+    }]
+  }]
+}, {
+  "firstName": "Ted",
+  "lastName": "Smith",
+  "id": 9,
+  "classes": []
+}]
+```
+
+It's as simple as that. Look at the ```filter``` specified above and then at the **JSON** results and see how the **Relationships** you created in **Part 1** above are easily reflected through the **API**.
 
 
 ***
-**More coming VERY soon...  Check again later today or tomorrow...**
+###Rendering with **Angular Data Binding**
 
+The last step in the **end-to-end** process which comes after **Creating**, **Retrieving** and **Rendering** your **LoopBack Relationships** is **Rendering** them within your **Angular Views**.
+
+For the **Students View**, let look at **[client/templates/students.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/templates/students.html)** and check out the **Angular Data Binding** used to **Render** our **Students** View.  Check out the **HTML Template Markup** below.
+
+```
+<h1>Student Enrollment</h1>
+<hr>
+<div class="list-group">
+ 	<div class="list-group-item level1" style="cursor:default;" 
+
+ 		ng-repeat="student in students">
+	 		<!-- 'students' above is '$scope.students' in the controller -->
+	 		<!--  let's iterate for each 'student' we find in that array -->
+
+  		<a class="paddedBlock"
+
+  			href="#/student/{{student.id}}">
+  				<!-- hyperlink to a specific 'student' -->
+
+  			{{student.firstName}}
+  			{{student.lastName}}
+  				<!-- data bind to the first and last name of the 'student' -->
+
+  		</a>
+
+	 	<div class="list-group-item level2" style="cursor:default;" 
+	 			ng-repeat="class in student.classes">
+  					<!-- we included 'classes' for each 'student' -->
+  					<!-- so iterate for each 'class' -->
+
+	  		<div class="paddedBlock">
+	  			<a href="#/class/{{class.id}}">
+  					<!-- hyperlink to a specific 'student' -->
+
+	  				{{class.subject}}
+  						<!-- display the 'subject' of the 'class' -->
+
+	  			</a>
+
+		  		<span ng-if="class.teachers">
+  					<!-- if the 'class' has a teacher assigned -->
+		  			taught by: 
+
+		  			<a href="#/teacher/{{class.teachers.id}}">
+  						<!-- hyperlink to that 'teacher' -->
+
+		  				{{class.teachers.firstName}}
+		  				{{class.teachers.lastName}}
+  							<!-- first and last name of the 'teacher' -->
+
+		  			</a>
+		  		</span>
+		  	</div>
+		 	<div class="list-group-item level3" style="cursor:default;"
+
+		 		ng-repeat="studentInClass in class.students"
+		 		ng-if="class.students && (student.id != studentInClass.id)">
+  					<!-- for each 'student' in each 'class' -->
+  					<!-- if the 'student' is not the top level 'student' -->
+
+		  			<span>Classmate: 
+		  				<a href="#/student/{{studentInClass.id}}">
+  							<!-- hyperlink to the 'classmate' 'student' -->
+
+		  					{{studentInClass.firstName}}
+		  					{{studentInClass.lastName}}
+  								<!-- and display their first and last name -->
+  								
+		  				</a>
+		  			</span>
+			</div>
+		</div>
+	</div>
+</div>
+```
+
+And the resulting **View** looks like this...
+
+![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png) 
+
+###Exploring the **Student**, **Class**, and **Teacher** Views
+
+The **Student**, **Class**, and **Teacher** controllers co-reside in **[client/js/controllers.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/controllers.js)** so look at the subtle differences in the ```filter``` used to retrieve each one of these **Entities** via the **API**.  Check out the **[Querying model data LoopBack Documentation](http://docs.strongloop.com/display/LB/Querying+model+data)** and experiment further.  
+
+One difference you'll see if that the **Controllers** other than **Students** use a ```where``` clause within their ```filter``` as seen below in a snippet from the **Class Controller**.
+
+```
+function getClass() {
+  Class
+    .find({"filter":
+              {
+                "where": {"id": $state.params.id},
+                "include": ["teachers","students"]
+              }})
+    .$promise
+    .then(function(results) {
+      $scope.class = results[0];
+    });
+}
+```
+
+Explore the **[Student View Template](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/templates/student.html)**, **[Teacher View Template](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/templates/teacher.html)**, and **[Class View Template](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/templates/class.html)** to close the loop on how each **View** is rendered.
+
+
+
+##Summary
+
+Enjoy how easy it is to **Create** and **Relate** your **LoopBack Models" and how easy it is to access the resulting **APIs** within the awesome **Apps** you'll dream of and create.
+
+That's all folks...  
+
+***
+
+Contact **[Tony Sukiennik](mailto:tony@iRelate.us)** with feedback
 
 

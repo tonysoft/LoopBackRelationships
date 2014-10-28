@@ -1,17 +1,68 @@
 <h1>Student Enrollment</h1>
 <hr>
 <div class="list-group">
- 	<div class="list-group-item level1" style="cursor:default;" ng-repeat="student in students">
-  		<a href="#/student/{{student.id}}" class="paddedBlock">{{student.firstName}}&nbsp;{{student.lastName}}</a>
-	 	<div class="list-group-item level2" style="cursor:default;" ng-repeat="class in student.classes">
+ 	<div class="list-group-item level1" style="cursor:default;" 
+
+ 		ng-repeat="student in students">
+	 		<!-- 'students' above is '$scope.students' in the controller -->
+	 		<!--  let's iterate for each 'student' we find in that array -->
+
+  		<a class="paddedBlock"
+
+  			href="#/student/{{student.id}}">
+  				<!-- hyperlink to a specific 'student' -->
+
+  			{{student.firstName}}
+  			{{student.lastName}}
+  				<!-- data bind to the first and last name of the 'student' -->
+
+  		</a>
+
+	 	<div class="list-group-item level2" style="cursor:default;" 
+	 			ng-repeat="class in student.classes">
+  					<!-- we included 'classes' for each 'student' -->
+  					<!-- so iterate for each 'class' -->
+
 	  		<div class="paddedBlock">
-	  			<a href="#/class/{{class.id}}">{{class.subject}}</a>
+	  			<a href="#/class/{{class.id}}">
+  					<!-- hyperlink to a specific 'student' -->
+
+	  				{{class.subject}}
+  						<!-- display the 'subject' of the 'class' -->
+
+	  			</a>
+
 		  		<span ng-if="class.teachers">
-		  			&nbsp;taught by: <a href="#/teacher/{{class.teachers.id}}">{{class.teachers.firstName}} {{class.teachers.lastName}}</a>
+  					<!-- if the 'class' has a teacher assigned -->
+		  			taught by: 
+
+		  			<a href="#/teacher/{{class.teachers.id}}">
+  						<!-- hyperlink to that 'teacher' -->
+
+		  				{{class.teachers.firstName}}
+		  				{{class.teachers.lastName}}
+  							<!-- first and last name of the 'teacher' -->
+
+		  			</a>
 		  		</span>
 		  	</div>
-		 	<div ng-if="class.students && (student.id != studentInClass.id)" class="list-group-item level3" style="cursor:default;" ng-repeat="studentInClass in class.students">
-		  		<span>Classmate: <a href="#/student/{{studentInClass.id}}">{{studentInClass.firstName}}&nbsp;{{studentInClass.lastName}}</a></span>
+		 	<div class="list-group-item level3" style="cursor:default;"
+
+		 		ng-repeat="studentInClass in class.students"
+		 		ng-if="class.students && (student.id != studentInClass.id)">
+  					<!-- for each 'student' in each 'class' -->
+  					<!-- if the 'student' is not the top level 'student' -->
+
+		  			<span>Classmate: 
+		  				<a href="#/student/{{studentInClass.id}}">
+  							<!-- hyperlink to the 'classmate' 'student' -->
+
+		  					{{studentInClass.firstName}}
+		  					{{studentInClass.lastName}}
+  								<!-- and display their first and last name -->
+  								
+		  				</a>
+		  			</span>
 			</div>
 		</div>
 	</div>

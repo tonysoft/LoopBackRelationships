@@ -4,30 +4,34 @@ angular
   .module('app')
 
 
-  .controller('StudentsCtrl', ['$scope', '$state', 'Student', function($scope, $state,
-      Student) {
-    $scope.students = [];
-    function getStudents() {
-      var filter =  { "filter":
-                      {
-                        "include":  { "relation": "classes", 
-                                      "scope":  { 
-                                                  "include": ["teachers","students"]
-                                                }
-                                    }
-                      }
-                    };
-
-      Student                         // access the Student Model Resource
-        .find(filter)                 // call the "find" method
-        .$promise                      
-        .then(function(results) {
-          $scope.students = results;  // and store the results
-        });
-    }
-    getStudents();
-
-  }])
+  .controller
+      ('StudentsCtrl', ['$scope', '$state', 'Student', function($scope, $state,
+          Student) {
+        $scope.students = [];
+        function getStudents() {          // Define a helper function  
+          var filter =  
+                { "filter":
+                  {
+                    "include":  { "relation": "classes", 
+                                  "scope":  { 
+                                              "include": ["teachers","students"]
+                                            }
+                                }
+                  }
+                };
+      
+          Student                         // access the Student Model Resource
+            .find(filter)                 // call the "find" method with a "filter"
+            .$promise                      
+            .then(function(results) {
+              $scope.students = results;  // and store the results
+              console.log(JSON.stringify(results));
+            });
+        }
+        
+        getStudents();                    // When the Controller is loaded
+      
+    }])
 
 
   .controller('TeacherCtrl', ['$scope', '$state', 'Teacher', function($scope, $state,
