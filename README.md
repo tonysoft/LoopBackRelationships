@@ -720,7 +720,7 @@ The **Routes** we'll expose in our **App** are ```students```, ```student```, ``
 
 As mentioned near the top of **Part 2**, you can run our **[Student Enrollment App](http://localhost:3000)** (if you've set it up) to see how it flows from a list of **Students**, into drilldowns for a specific **Student**, **Teacher**, or **Class**.  
 
-<div style="text-align:center;">![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png) ![Class Profile](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/Class.png)</div>
+![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png) ![Class Profile](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/Class.png)
 
 
 
