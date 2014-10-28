@@ -131,9 +131,9 @@ Note above that the **Teacher** Model is is **based** on another Model named **P
 
 At this point, just about all we can do is Create, Read, Update, and Delete Classes and Teachers.
 
-List all Classes: **http://localhost:3000/api/Classes**
+List all Classes: **(http://localhost:3000/api/Classes)**
 
-List all Teachers: **http://localhost:3000/api/Teachers** 
+List all Teachers: **(http://localhost:3000/api/Teachers)** 
 
 **NOTE:** Whenever you see a links like the ones above and you have installed and run the **[LoopBack](http://loopback.io/)** REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data.  You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
 
