@@ -135,9 +135,9 @@ List all Classes: **[http://localhost:3000/api/Classes](http://localhost:3000/ap
 
 List all Teachers: **[http://localhost:3000/api/Teachers](http://localhost:3000/api/Teachers)** 
 
-**NOTE:** Whenever you see a links like the ones above and you have installed and run the **[LoopBack](http://loopback.io/)** REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data.  You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
+>**NOTE:** Whenever you see a links like the ones above and you have installed and run the **[LoopBack](http://loopback.io/)** REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data.  You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
 
-*The easiest way to Explore and manipulate the APIs you create with Loopback is to use LoopBack Explorer: **[http://localhost:3000/explorer](http://localhost:3000/explorer)**
+The easiest way to Explore and manipulate the APIs you create with Loopback is to use LoopBack Explorer: **[http://localhost:3000/explorer](http://localhost:3000/explorer)
 
 ***
 
@@ -495,7 +495,7 @@ Lastly, let’s look at the **Appointments** for **Student 1**.  Just enter this
 ]
 ```
 
-**Note**: From **LoopBack Explorer**, when you want to **Query** your **Models**, the concept of **filter** is very useful and important.  In the example above the **LoopBack Explorer** will allow you enter a **filter** and entering "**{"where":{"studentId":1},"include":["teachers","students"]}** will yield the results listed above.
+>**Note**: From **LoopBack Explorer**, when you want to **Query** your **Models**, the concept of **filter** is very useful and important.  In the example above the **LoopBack Explorer** will allow you enter a **filter** and entering "**{"where":{"studentId":1},"include":["teachers","students"]}** will yield the results listed above.
 
 ***
 
@@ -511,7 +511,7 @@ Speaking of **Apps**, an **API** would be useless without **Apps**, so **Part 2*
 
 First, run the **[Student Enrollment App](http://localhost:3000)** from our School which includes Classes, Teachers and easily and seamlessly explores all of their interrelationships.  
 
-**Note**: you will only be able to **Run the App** locally if you followed the **installation instructions** at the **Top of Part 1** above.
+>**Note**: you will only be able to **Run the App** locally if you followed the **installation instructions** at the **Top of Part 1** above.
 
 You can start exploring the **[Source Code for the Student Enrollment App](https://github.com/tonysoft/LoopBackRelationships/tree/master/client)** and we'll be decomposing that code below.
 
