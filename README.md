@@ -306,7 +306,7 @@ or
 
 If we again want to look at the **Classes** taken by **Student 1** as well ALL of the **Students** in each **Class** as well as the **Teachers** who teach the **Classes**, we’d use this API Link…
 
-http://localhost:3000/api/Students/1/classes?filter={"include":["students","teachers"]}
+**[http://localhost:3000/api/Students/1/classes?filter={"include":["students","teachers"]}](http://localhost:3000/api/Students/1/classes?filter={"include":["students","teachers"]})**
 
 ```
 [
@@ -650,19 +650,15 @@ $ cd /YourChosenDirectory/.../LoopBackRelationships/client
 $ lb-ng-doc js/lb-services.js
 Browse the documentation at http://localhost:3030/
 
-// You'll actually want to go the the Link below
-
 ```
 
-**http://localhost:3030/documentation/loopback/lbServices/lbServices**
-
->**Note:** LoopBack API Documentation will always be viewable on Port 3030 as shown above.  The Port cannot be configured at this time.
+>**Note:** LoopBack API Documentation will ONLY be viewable on Port 3030 as shown above.  The Port cannot be configured at this time.
 
 Navigating to that Link will allow you to look at the **Methods** and their **Signatures**.  See the full **[LoopBack Angular SDK Documentation](http://docs.strongloop.com/display/LB/AngularJS+JavaScript+SDK)** for more options.
 
 ***
 
-###Wiring your API from into your Angular App
+###Wiring your API into your Angular App
 
 As discussed and illustrated above, the first step is to simply reference **[client/js/lb-services.js](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/js/lb-services.js)** from within **[client/index.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/index.html)**
 
