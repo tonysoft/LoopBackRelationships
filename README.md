@@ -13,7 +13,7 @@ Using the technical Relationship Terminology used when declaring **[LoopBack](ht
 * Classes **belongsTo** Teachers.  In other words, Teachers **own** the Classes and only one Teacher teaches a Class (at least at this school).
 
 
-* Teachers **hasMany** Classes.  In other words, Teachers sometimes teach **many** Classes (and ** exclusively own** each one of them).
+* Teachers **hasMany** Classes.  In other words, Teachers sometimes teach **many** Classes (and **exclusively own** each one of them).
 
 
 * Students **hasAndBelongsToMany** Classes.  **Students have** one or more **Classes** and **Classes have** one or more **Students**.
@@ -137,7 +137,7 @@ List all Teachers: **http://localhost:3000/api/Teachers**
 
 **NOTE:** Whenever you see a links like the ones above and you have installed and run the **[LoopBack](http://loopback.io/)** REST API Server Application associated with this Repository, you can navigate to the links and exercise the API against the Sample Data.  You'll be seeing the final results of this Project and not the Step-by-Step build-up we're writing here.
 
-*The easiest way to Explore and manipulate the APIs you create with Loopback is to use LoopBack Explorer: (http://localhost:3000/explorer)*
+*The easiest way to Explore and manipulate the APIs you create with Loopback is to use LoopBack Explorer: **http://localhost:3000/explorer** *
 
 ***
 
@@ -718,8 +718,9 @@ If you're using **AngularJS**, you've seen this typical **App** definiation.  Th
 
 The **Routes** we'll expose in our **App** are ```students```, ```student```, ```class```, and ```teacher```.  You can see how we've wired together the ```state```, ```url``` (path), ```templateUrl``` (html), and ```controller``` for each of the **Views** we will expose in our **App**.
 
-As mentioned near the top of **Part 2**, you can run our **[Student Enrollment App](http://localhost:3000)** (if you've set it up) to see how it flows from a list of **Students**, into drilldowns for a specific **Student**, **Teacher**, or **Class**.
+As mentioned near the top of **Part 2**, you can run our **[Student Enrollment App](http://localhost:3000)** (if you've set it up) to see how it flows from a list of **Students**, into drilldowns for a specific **Student**, **Teacher**, or **Class**.  
 
+<div style="text-align:center;">![Student Enrollment](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/StudentEnrollment.png) ![Class Profile](https://github.com/tonysoft/LoopBackRelationships/blob/master/ScreenShots/Class.png)</div>
 
 
 
