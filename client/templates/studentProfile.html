@@ -45,3 +45,20 @@
   			</span>
 	</div>
 </div>
+<div class="list-group-item level2" style="cursor:default;" 
+
+	ng-repeat="appointment in student.appointments">
+		<!-- for each 'appointment' -->
+		<span>Appointment with: 
+			<a href="#/teacher/{{appointment.teacherId}}">
+				<!-- hyperlink to the 'appointment/teacher' -->
+				{{appointment.teachers.firstName}}
+				{{appointment.teachers.lastName}}
+					<!-- and display the Appointment Data/Time -->
+					
+			</a>
+		</span>
+		<div class="dateRightJustified">
+			{{formatDate(appointment.dateTime)}}
+		</div>
+</div>

@@ -1,6 +1,7 @@
 body {
   padding-top:50px;
 }
+
 .glyphicon-remove:hover {
   cursor:pointer;
 }
@@ -19,6 +20,12 @@ a {
 
 .biggerText {
 	font-size:115%;
+}
+
+.dateRightJustified {
+	width: 100%;
+	text-align: right;
+	margin-right:15px;
 }
 
 .level1 {
@@ -41,6 +48,7 @@ header, .header {
 	text-align: center !important;
 	width: 100%;
 }
+
 
 footer {
    position:fixed;

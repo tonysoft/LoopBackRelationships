@@ -55,22 +55,35 @@ angular
   }])
 
 
-  .controller('StudentCtrl', ['$scope', '$state', 'Student', function($scope, $state,
-      Student) {
+  .controller('StudentCtrl', ['$scope', '$state', 'Student', "Appointment", function($scope, $state,
+      Student, Appointment) {
     $scope.student = {};
+    var studentId = parseInt($state.params.id);
     function getStudent() {
       Student
         .find({"filter":
                   {
-                    "where": {"id": $state.params.id},
+                    "where": {"id": studentId},
                     "include": {"relation": "classes", "scope": {"include": ["teachers","students"]}}
                   }})
         .$promise
-        .then(function(results) {
-          $scope.student = results[0];
+        .then(function(students) {
+          $scope.student = students[0];
+          return Appointment.find({"filter":
+                                    {"where": { "studentId": studentId}, 
+                                      "include" : "teachers" }
+                                  }).$promise
+        })
+        .then(function(appointments) {
+          $scope.student.appointments = appointments;
         });
     }
     getStudent();
+
+    $scope.formatDate = function(dateTime) {
+      var d = new Date(dateTime);
+      return "on: " + d.toLocaleDateString() + " at: " + d.toLocaleTimeString();
+    }
 
   }])
 
