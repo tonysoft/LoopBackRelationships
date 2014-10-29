@@ -35,23 +35,41 @@ angular
     }])
 
 
-  .controller('TeacherCtrl', ['$scope', '$state', 'Teacher', function($scope, $state,
-      Teacher) {
+  .controller('TeacherCtrl', ['$scope', '$state', 'Teacher', "Appointment", function($scope, $state,
+      Teacher, Appointment) {
     $scope.teacher = {};
+    var teacherId = $state.params.id;
     function getTeacher() {
       Teacher
         .find({"filter":
                   {
-                    "where": {"id": $state.params.id},
+                    "where": {"id": teacherId},
                     "include": {"relation": "classes", "scope": {"include": ["students"]}}
                   }})
         .$promise
-        .then(function(results) {
-          $scope.teacher = results[0];
+        .then(function(teachers) {
+          $scope.teacher = teachers[0];
+          return getAppointments();
+        })
+        .then(function(appointments) {
+          $scope.teacher.appointments = appointments;
         });
     }
+
+    function getAppointments() {
+      return Appointment.find({"filter":
+                          {"where": { "teacherId": teacherId}, 
+                            "include" : "students" }
+                        }).$promise
+    }
+
     getTeacher();
 
+    $scope.formatDate = function(dateTime) {
+      var d = new Date(dateTime);
+      return "on: " + d.toLocaleDateString() + " at: " + d.toLocaleTimeString();
+    }
+    
   }])
 
 
@@ -69,15 +87,20 @@ angular
         .$promise
         .then(function(students) {
           $scope.student = students[0];
-          return Appointment.find({"filter":
-                                    {"where": { "studentId": studentId}, 
-                                      "include" : "teachers" }
-                                  }).$promise
+          return getAppointments();
         })
         .then(function(appointments) {
           $scope.student.appointments = appointments;
         });
     }
+
+    function getAppointments() {
+      return Appointment.find({"filter":
+                          {"where": { "studentId": studentId}, 
+                            "include" : "teachers" }
+                        }).$promise
+    }
+
     getStudent();
 
     $scope.formatDate = function(dateTime) {
