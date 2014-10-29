@@ -863,53 +863,72 @@ For the **Students View**, let look at **[client/templates/students.html](https:
 
   		</a>
 
-	 	<div class="list-group-item level2" style="cursor:default;" 
-	 			ng-repeat="class in student.classes">
-  					<!-- we included 'classes' for each 'student' -->
-  					<!-- so iterate for each 'class' -->
+  		<ng-include src="'templates/studentProfile.html'"/>
+  			<!-- This renders the students's Classes, Teachers, Classmates -->
 
-	  		<div class="paddedBlock">
-	  			<a href="#/class/{{class.id}}">
-  					<!-- hyperlink to a specific 'student' -->
+	</div>
+</div>
+```
 
-	  				{{class.subject}}
-  						<!-- display the 'subject' of the 'class' -->
+Notice above ```<ng-include src="'templates/studentProfile.html'"/>```.  This is the detail for each ```student``` that is rendered from the **Student Enrollment** list. It is also included to render a specific **Student** when we drill down from any other view. Below is what the **[client/templates/studentProfile.html](https://github.com/tonysoft/LoopBackRelationships/blob/master/client/templates/studentProfile.html)** template looks like.  This is an example of **Code Reuse** within your **Angular Templating**.
 
-	  			</a>
+```
+<a class="paddedBlock"
 
-		  		<span ng-if="class.teachers">
-  					<!-- if the 'class' has a teacher assigned -->
-		  			taught by: 
+	href="#/student/{{student.id}}">
+		<!-- hyperlink to a specific 'student' -->
 
-		  			<a href="#/teacher/{{class.teachers.id}}">
-  						<!-- hyperlink to that 'teacher' -->
+	{{student.firstName}}
+	{{student.lastName}}
+		<!-- data bind to the first and last name of the 'student' -->
 
-		  				{{class.teachers.firstName}}
-		  				{{class.teachers.lastName}}
-  							<!-- first and last name of the 'teacher' -->
+</a>
 
-		  			</a>
-		  		</span>
-		  	</div>
-		 	<div class="list-group-item level3" style="cursor:default;"
+<div class="list-group-item level2" style="cursor:default;" 
+			ng-repeat="class in student.classes">
+				<!-- we included 'classes' for each 'student' -->
+				<!-- so iterate for each 'class' -->
 
-		 		ng-repeat="studentInClass in class.students"
-		 		ng-if="class.students && (student.id != studentInClass.id)">
-  					<!-- for each 'student' in each 'class' -->
-  					<!-- if the 'student' is not the top level 'student' -->
+		<div class="paddedBlock">
+			<a href="#/class/{{class.id}}">
+				<!-- hyperlink to a specific 'student' -->
 
-		  			<span>Classmate: 
-		  				<a href="#/student/{{studentInClass.id}}">
-  							<!-- hyperlink to the 'classmate' 'student' -->
+				{{class.subject}}
+					<!-- display the 'subject' of the 'class' -->
 
-		  					{{studentInClass.firstName}}
-		  					{{studentInClass.lastName}}
-  								<!-- and display their first and last name -->
-  								
-		  				</a>
-		  			</span>
-			</div>
-		</div>
+			</a>
+
+  		<span ng-if="class.teachers">
+				<!-- if the 'class' has a teacher assigned -->
+  			taught by: 
+
+  			<a href="#/teacher/{{class.teachers.id}}">
+					<!-- hyperlink to that 'teacher' -->
+
+  				{{class.teachers.firstName}}
+  				{{class.teachers.lastName}}
+						<!-- first and last name of the 'teacher' -->
+
+  			</a>
+  		</span>
+  	</div>
+ 	<div class="list-group-item level3" style="cursor:default;"
+
+ 		ng-repeat="studentInClass in class.students"
+ 		ng-if="class.students && (student.id != studentInClass.id)">
+				<!-- for each 'student' in each 'class' -->
+				<!-- if the 'student' is not the top level 'student' -->
+
+  			<span>Classmate: 
+  				<a href="#/student/{{studentInClass.id}}">
+						<!-- hyperlink to the 'classmate' 'student' -->
+
+  					{{studentInClass.firstName}}
+  					{{studentInClass.lastName}}
+							<!-- and display their first and last name -->
+							
+  				</a>
+  			</span>
 	</div>
 </div>
 ```

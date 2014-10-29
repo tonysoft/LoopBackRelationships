@@ -1,0 +1,25 @@
+<h1>Student Enrollment</h1>
+<hr>
+<div class="list-group">
+ 	<div class="list-group-item level1" style="cursor:default;" 
+
+ 		ng-repeat="student in students">
+	 		<!-- 'students' above is '$scope.students' in the controller -->
+	 		<!--  let's iterate for each 'student' we find in that array -->
+
+  		<a class="paddedBlock"
+
+  			href="#/student/{{student.id}}">
+  				<!-- hyperlink to a specific 'student' -->
+
+  			{{student.firstName}}
+  			{{student.lastName}}
+  				<!-- data bind to the first and last name of the 'student' -->
+
+  		</a>
+
+  		<ng-include src="'templates/studentProfile.html'"/>
+  			<!-- This renders the students's Classes, Teachers, Classmates -->
+
+	</div>
+</div>
