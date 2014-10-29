@@ -35,3 +35,22 @@ a {
 	background-color: #F3F3F3; !important;
 	margin-bottom: 3px;
 }
+
+header, .header {
+	color: #cccccc !important;
+	text-align: center !important;
+	width: 100%;
+}
+
+footer {
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:30px;
+   padding-top: 5px;
+   font-size:14px;
+   color: #cccccc;
+   width:100%;
+   background:#000;
+   text-align: center;
+}

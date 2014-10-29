@@ -14,7 +14,8 @@ angular
                   {
                     "include":  { "relation": "classes", 
                                   "scope":  { 
-                                              "include": ["teachers","students"]
+                                              "include": ["teachers",
+                                                          "students"]
                                             }
                                 }
                   }

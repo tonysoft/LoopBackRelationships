@@ -3,17 +3,9 @@
 <div class="list-group">
  	<div class="list-group-item level1" style="cursor:default;">
   		<h4 class="paddedBlock">{{student.firstName}}&nbsp;{{student.lastName}}</h4>
-	 	<div class="list-group-item level2" style="cursor:default;" ng-repeat="class in student.classes">
-  			<div class="paddedBlock">
-  				<a href="#/class/{{class.id}}">{{class.subject}}</a>
-		  		<span ng-if="class.teachers">
-		  			&nbsp;taught by: <a href="#/teacher/{{class.teachers.id}}">{{class.teachers.firstName}} {{class.teachers.lastName}}</a>
-		  		</span>
-  			</div>
-		 	<div ng-if="class.students && (student.id != studentInClass.id)" class="list-group-item level3" style="cursor:default;" ng-repeat="studentInClass in class.students">
-		  		<span>Classmate: <a href="#/student/{{studentInClass.id}}">{{studentInClass.firstName}}&nbsp;{{studentInClass.lastName}}</a></span>
-			</div>
-		</div>
+
+  		<ng-include src="'templates/studentProfile.html'"></ng-include>
+  				<!-- This renders the students's Classes, Teachers, Classmates -->
 	</div>
 </div>
 <br>

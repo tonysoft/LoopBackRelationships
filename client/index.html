@@ -17,18 +17,22 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body ng-app="app" style="border: 3px solid black; min-height:550px;">
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <body ng-app="app">
+    <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#"><span style="color: #cccccc;">LoopBack Model Relationships</span></a>
+          <a class="navbar-brand header" href="#">LoopBack Model Relationships</a>
         </div>
       </div>
-    </div>
+    </header>
 
     <div class="container">
       <div ui-view></div>
     </div>
+
+<footer>
+  We'll (will) teach you a lesson...
+</footer>
 
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
@@ -40,6 +44,6 @@
     <script src="js/controllers.js"></script>
 
     <script src="js/lb-services.js"></script>
-    
+
   </body>
 </html>

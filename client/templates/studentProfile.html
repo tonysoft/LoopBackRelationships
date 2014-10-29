@@ -1,0 +1,47 @@
+<div class="list-group-item level2" style="cursor:default;" 
+			ng-repeat="class in student.classes">
+				<!-- we included 'classes' for each 'student' -->
+				<!-- so iterate for each 'class' -->
+
+		<div class="paddedBlock">
+			<a href="#/class/{{class.id}}">
+				<!-- hyperlink to a specific 'student' -->
+
+				{{class.subject}}
+					<!-- display the 'subject' of the 'class' -->
+
+			</a>
+
+  		<span ng-if="class.teachers">
+				<!-- if the 'class' has a teacher assigned -->
+  			taught by: 
+
+  			<a href="#/teacher/{{class.teachers.id}}">
+					<!-- hyperlink to that 'teacher' -->
+
+  				{{class.teachers.firstName}}
+  				{{class.teachers.lastName}}
+						<!-- first and last name of the 'teacher' -->
+
+  			</a>
+  		</span>
+  	</div>
+ 	<div class="list-group-item level3" style="cursor:default;"
+
+ 		ng-repeat="studentInClass in class.students"
+ 		ng-if="class.students && (student.id != studentInClass.id)">
+				<!-- for each 'student' in each 'class' -->
+				<!-- if the 'student' is not the top level 'student' -->
+
+  			<span>Classmate: 
+  				<a href="#/student/{{studentInClass.id}}">
+						<!-- hyperlink to the 'classmate' 'student' -->
+
+  					{{studentInClass.firstName}}
+  					{{studentInClass.lastName}}
+							<!-- and display their first and last name -->
+							
+  				</a>
+  			</span>
+	</div>
+</div>
